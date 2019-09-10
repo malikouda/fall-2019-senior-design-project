@@ -26,9 +26,11 @@ public class CharacterMovement : MonoBehaviour {
         float inputMagnitude = Mathf.Abs(horizontal) + Mathf.Abs(vertical);
         inputAmount = Mathf.Clamp01(inputMagnitude);
 
-        Quaternion rot = Quaternion.LookRotation(moveDirection);
-        Quaternion targetRotation = Quaternion.Slerp(transform.rotation, rot, Time.fixedDeltaTime * inputAmount * rotateSpeed);
-        transform.rotation = targetRotation;
+        if (moveDirection != Vector3.zero) {
+            Quaternion rot = Quaternion.LookRotation(moveDirection);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, rot, Time.fixedDeltaTime * inputAmount * rotateSpeed);
+            transform.rotation = targetRotation;
+        }
     }
 
     private void FixedUpdate() {
