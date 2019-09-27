@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour {
+public class Character : MonoBehaviour {
 
     public float moveSpeed = 6f;
     public float rotateSpeed = 10f;
@@ -8,6 +8,8 @@ public class CharacterMovement : MonoBehaviour {
     Rigidbody rb;
     Vector3 moveDirection;
     float inputAmount;
+    bool touching = false;
+    GameObject interactable;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -31,9 +33,29 @@ public class CharacterMovement : MonoBehaviour {
             Quaternion targetRotation = Quaternion.Slerp(transform.rotation, rot, Time.fixedDeltaTime * inputAmount * rotateSpeed);
             transform.rotation = targetRotation;
         }
+
+        if (touching && Input.GetKeyDown(KeyCode.E) && interactable) {
+            interactable.GetComponent<Interactable>().Activate(this.gameObject);
+        }
+
+
     }
 
     private void FixedUpdate() {
         rb.velocity = (moveDirection * moveSpeed * inputAmount);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Interactable") {
+            touching = true;
+            interactable = other.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.tag == "Interactable") {
+            touching = false;
+            interactable = null;
+        }
     }
 }
