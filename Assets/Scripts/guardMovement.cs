@@ -62,7 +62,7 @@ public class guardMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, mAgent.destination) < threshold) 
+        if (mAgent.remainingDistance < threshold) 
         {
             index += 1 * direction;
             if (index >= patrol.Count) 
@@ -77,7 +77,8 @@ public class guardMovement : MonoBehaviour {
                 direction = 1;
             }
 
-            mAgent.destination = patrol[index];
+            
         }
+        mAgent.destination = patrol[index];
     }
 }
