@@ -1,0 +1,147 @@
+{
+    "name": "PlayerControls",
+    "maps": [
+        {
+            "name": "Gameplay",
+            "id": "fbfad7ac-7f89-47d6-8cdd-37517a086dc4",
+            "actions": [
+                {
+                    "name": "move",
+                    "type": "Button",
+                    "id": "d9036dc6-8647-48f2-bb58-3e29d8ad5382",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "x",
+                    "type": "Button",
+                    "id": "504a660e-5d6a-4b9a-ad07-a21fdd6eac8c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "y",
+                    "type": "Button",
+                    "id": "6a22aee9-9269-45ef-b37a-fd2ff5d57a11",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "a",
+                    "type": "Button",
+                    "id": "464983b6-a7fa-49b9-a400-66485c76fb4b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "b",
+                    "type": "Button",
+                    "id": "b1ac0f18-15ed-4297-a76e-4ba8513050ba",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Ltrigger",
+                    "type": "Button",
+                    "id": "b1315867-4ee0-49be-a0f9-1bc72738fedc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold"
+                },
+                {
+                    "name": "Rtrigger",
+                    "type": "Button",
+                    "id": "e9e0e769-0599-4d59-bdf6-2d490b93bd87",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1c2ca718-ec59-4c29-ac4d-e0d71e557e8a",
+                    "path": "<HID::USB Gamepad >/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5cb0a903-4e21-4b78-866d-ea562ee1a7c6",
+                    "path": "<HID::USB Gamepad >/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "x",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48fd75aa-025b-4831-8f3c-c0ab134eb93b",
+                    "path": "<HID::USB Gamepad >/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "778e8853-0abe-4d08-8eef-f69c9bb85375",
+                    "path": "<HID::USB Gamepad >/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "a",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77a2f6ab-e7df-4213-9c82-5aab6e9ae163",
+                    "path": "<HID::USB Gamepad >/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "b",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63f38d7b-101a-4ea2-9842-cf28b7f7056c",
+                    "path": "<HID::USB Gamepad >/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ltrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c514ebe0-024e-46fc-a3d1-81ea93407e95",
+                    "path": "<HID::USB Gamepad >/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rtrigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
