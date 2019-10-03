@@ -66,6 +66,7 @@ public class hackerGame : MonoBehaviour, minigame
             if (correctInput > length)
             {
                 Debug.Log("WIN");
+                correctInput = 0;
                 Destroy(gameObject);
             }
 

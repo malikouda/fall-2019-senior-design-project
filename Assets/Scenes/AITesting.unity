@@ -1069,7 +1069,7 @@ GameObject:
   - component: {fileID: 382759391}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1682,8 +1682,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 9
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Color: {r: 0.66162336, g: 0.7790388, b: 0.7924528, a: 1}
+  m_Intensity: 0.6
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2166,6 +2166,11 @@ PrefabInstance:
         type: 3}
       propertyPath: threshold
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901811874954934215, guid: 6521f158ce3c9c84c86709749a82c383,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6521f158ce3c9c84c86709749a82c383, type: 3}
@@ -2936,6 +2941,11 @@ PrefabInstance:
         type: 3}
       propertyPath: threshold
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901811874954934215, guid: 6521f158ce3c9c84c86709749a82c383,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1536507241829424795, guid: 6521f158ce3c9c84c86709749a82c383,
         type: 3}
@@ -4933,15 +4943,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7124554630049233117, guid: 6521f158ce3c9c84c86709749a82c383,
+    - target: {fileID: 407927620928033739, guid: 6521f158ce3c9c84c86709749a82c383,
         type: 3}
-      propertyPath: threshold
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1536507241829424795, guid: 6521f158ce3c9c84c86709749a82c383,
+      propertyPath: sightSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07468f32c3a3af044afb91217b9297eb,
         type: 3}
-      propertyPath: m_Radius
-      value: 0.64
+    - target: {fileID: 407927620928033739, guid: 6521f158ce3c9c84c86709749a82c383,
+        type: 3}
+      propertyPath: visionThreshold
+      value: 93
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6521f158ce3c9c84c86709749a82c383, type: 3}
@@ -5662,6 +5673,16 @@ PrefabInstance:
         type: 3}
       propertyPath: threshold
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6901811874954934215, guid: 6521f158ce3c9c84c86709749a82c383,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 407927620928033739, guid: 6521f158ce3c9c84c86709749a82c383,
+        type: 3}
+      propertyPath: visionThreshold
+      value: 90
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6521f158ce3c9c84c86709749a82c383, type: 3}
