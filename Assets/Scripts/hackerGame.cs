@@ -5,22 +5,47 @@ using UnityEngine.UI;
 
 public class hackerGame : MonoBehaviour, minigame
 {
-    
+    public enum BUTTONS { X, Y, A, B };
+
     public int length;
     private List<int> pattern;
     private int correctInput;
     private Text playText;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        playText = gameObject.GetComponentInChildren<Text>();
+        anim = GetComponent<Animator>();
+        playText = GetComponentInChildren<Text>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void displayNext(int next)
     {
-        
+        switch (next)
+        {
+            case (int)BUTTONS.X:
+                {
+                    playText.text = "x";
+                    break;
+                }
+            case (int)BUTTONS.Y:
+                {
+                    playText.text = "y";
+                    break;
+                }
+            case (int)BUTTONS.A:
+                {
+                    playText.text = "a";
+                    break;
+                }
+            case (int)BUTTONS.B:
+                {
+                    playText.text = "b";
+                    break;
+                }
+        }
     }
+
 
     public void startGame()
     {
@@ -31,29 +56,7 @@ public class hackerGame : MonoBehaviour, minigame
             pattern.Add(Random.Range(0, 3));
         }
 
-        switch(pattern[0])
-        {
-            case 0:
-                {
-                    playText.text = "x";
-                    break;
-                }
-            case 1:
-                {
-                    playText.text = "y";
-                    break;
-                }
-            case 2:
-                {
-                    playText.text = "a";
-                    break;
-                }
-            case 3:
-                {
-                    playText.text = "b";
-                    break;
-                }
-        }
+        displayNext(pattern[0]);
 
     }
 
@@ -70,33 +73,14 @@ public class hackerGame : MonoBehaviour, minigame
                 Destroy(gameObject);
             }
 
-            switch (pattern[correctInput])
-            {
-                case 0:
-                    {
-                        playText.text = "x";
-                        break;
-                    }
-                case 1:
-                    {
-                        playText.text = "y";
-                        break;
-                    }
-                case 2:
-                    {
-                        playText.text = "a";
-                        break;
-                    }
-                case 3:
-                    {
-                        playText.text = "b";
-                        break;
-                    }
-            }
+            displayNext(pattern[correctInput]);
+            anim.SetTrigger("pass");
         }
         else
         {
             correctInput = 0;
+            displayNext(pattern[correctInput]);
+            anim.SetTrigger("fail");
         }
     }
 }
