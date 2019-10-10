@@ -1,0 +1,2 @@
+﻿public class MazePassage : MazeCellEdge {
+}
