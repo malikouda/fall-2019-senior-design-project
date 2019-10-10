@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
-public class Character : MonoBehaviour
+
+public class singleCharacter : MonoBehaviour
 {
-    public enum BUTTONS {X,Y,A,B};
+    public enum BUTTONS { X, Y, A, B };
     public float moveSpeed = 6f;
     public float rotateSpeed = 10f;
     Rigidbody rb;
@@ -52,8 +55,10 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        
-        Vector2 m = move * Time.deltaTime;
+        float vert = Input.GetAxis("Vertical");
+        float horiz = Input.GetAxis("Horizontal");
+        Vector2 keyMove = new Vector2(horiz, vert);
+        Vector2 m = (move + keyMove) * Time.deltaTime;
         Vector3 combinedInput = new Vector3(m.x, 0, m.y);
 
         moveDirection = new Vector3(combinedInput.normalized.x, 0, combinedInput.normalized.z);
@@ -147,9 +152,4 @@ public class Character : MonoBehaviour
     {
         controller.a = true;
     }
-
-
-
-
-
 }

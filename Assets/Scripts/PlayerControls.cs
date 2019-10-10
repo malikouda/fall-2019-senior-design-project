@@ -153,6 +153,153 @@ public class PlayerControls : IInputActionCollection
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Gameplay(Keyboard)"",
+            ""id"": ""41949ab1-b0cb-45f6-9f2a-88d1b13d9264"",
+            ""actions"": [
+                {
+                    ""name"": ""move"",
+                    ""type"": ""Button"",
+                    ""id"": ""77fe1f41-7b8a-4f3f-9a6b-94c9a821ab97"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""x"",
+                    ""type"": ""Button"",
+                    ""id"": ""54bfc992-fb6e-4403-81ea-5b00cdfcbbdb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""y"",
+                    ""type"": ""Button"",
+                    ""id"": ""83576b09-3814-4785-a1cf-df06a5935296"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""a"",
+                    ""type"": ""Button"",
+                    ""id"": ""28bafbc2-297a-40b9-9b6f-71c5f95c28b8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""b"",
+                    ""type"": ""Button"",
+                    ""id"": ""88dfd09a-be26-4235-85dd-492491683fc0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""70f786c0-201e-4afb-9aa9-e3e8db04d82f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""c9fd85be-950e-4590-9e4b-19826a8c3bfb"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""a7c43165-42b9-43a2-891e-3cbc9c7bb046"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f3f27884-0e43-4e4b-8c49-bdba72ef107d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1e077770-a4f0-484f-b995-8a4c9316ee08"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7ca9163-6c0e-4c5e-89fb-37326c6bb938"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""x"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e0aea55-e99c-4dc7-a0a1-67b153bcb454"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2dbd20a-f79f-4fc1-9de4-1e807d209626"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""a"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3358f9fe-58fd-4c20-8b83-b63acbea7cb9"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""b"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -166,6 +313,13 @@ public class PlayerControls : IInputActionCollection
         m_Gameplay_b = m_Gameplay.FindAction("b", throwIfNotFound: true);
         m_Gameplay_Ltrigger = m_Gameplay.FindAction("Ltrigger", throwIfNotFound: true);
         m_Gameplay_Rtrigger = m_Gameplay.FindAction("Rtrigger", throwIfNotFound: true);
+        // Gameplay(Keyboard)
+        m_GameplayKeyboard = asset.FindActionMap("Gameplay(Keyboard)", throwIfNotFound: true);
+        m_GameplayKeyboard_move = m_GameplayKeyboard.FindAction("move", throwIfNotFound: true);
+        m_GameplayKeyboard_x = m_GameplayKeyboard.FindAction("x", throwIfNotFound: true);
+        m_GameplayKeyboard_y = m_GameplayKeyboard.FindAction("y", throwIfNotFound: true);
+        m_GameplayKeyboard_a = m_GameplayKeyboard.FindAction("a", throwIfNotFound: true);
+        m_GameplayKeyboard_b = m_GameplayKeyboard.FindAction("b", throwIfNotFound: true);
     }
 
     ~PlayerControls()
@@ -292,6 +446,71 @@ public class PlayerControls : IInputActionCollection
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Gameplay(Keyboard)
+    private readonly InputActionMap m_GameplayKeyboard;
+    private IGameplayKeyboardActions m_GameplayKeyboardActionsCallbackInterface;
+    private readonly InputAction m_GameplayKeyboard_move;
+    private readonly InputAction m_GameplayKeyboard_x;
+    private readonly InputAction m_GameplayKeyboard_y;
+    private readonly InputAction m_GameplayKeyboard_a;
+    private readonly InputAction m_GameplayKeyboard_b;
+    public struct GameplayKeyboardActions
+    {
+        private PlayerControls m_Wrapper;
+        public GameplayKeyboardActions(PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @move => m_Wrapper.m_GameplayKeyboard_move;
+        public InputAction @x => m_Wrapper.m_GameplayKeyboard_x;
+        public InputAction @y => m_Wrapper.m_GameplayKeyboard_y;
+        public InputAction @a => m_Wrapper.m_GameplayKeyboard_a;
+        public InputAction @b => m_Wrapper.m_GameplayKeyboard_b;
+        public InputActionMap Get() { return m_Wrapper.m_GameplayKeyboard; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameplayKeyboardActions set) { return set.Get(); }
+        public void SetCallbacks(IGameplayKeyboardActions instance)
+        {
+            if (m_Wrapper.m_GameplayKeyboardActionsCallbackInterface != null)
+            {
+                move.started -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnMove;
+                move.performed -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnMove;
+                move.canceled -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnMove;
+                x.started -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnX;
+                x.performed -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnX;
+                x.canceled -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnX;
+                y.started -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnY;
+                y.performed -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnY;
+                y.canceled -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnY;
+                a.started -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnA;
+                a.performed -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnA;
+                a.canceled -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnA;
+                b.started -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnB;
+                b.performed -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnB;
+                b.canceled -= m_Wrapper.m_GameplayKeyboardActionsCallbackInterface.OnB;
+            }
+            m_Wrapper.m_GameplayKeyboardActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                move.started += instance.OnMove;
+                move.performed += instance.OnMove;
+                move.canceled += instance.OnMove;
+                x.started += instance.OnX;
+                x.performed += instance.OnX;
+                x.canceled += instance.OnX;
+                y.started += instance.OnY;
+                y.performed += instance.OnY;
+                y.canceled += instance.OnY;
+                a.started += instance.OnA;
+                a.performed += instance.OnA;
+                a.canceled += instance.OnA;
+                b.started += instance.OnB;
+                b.performed += instance.OnB;
+                b.canceled += instance.OnB;
+            }
+        }
+    }
+    public GameplayKeyboardActions @GameplayKeyboard => new GameplayKeyboardActions(this);
     public interface IGameplayActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -301,5 +520,13 @@ public class PlayerControls : IInputActionCollection
         void OnB(InputAction.CallbackContext context);
         void OnLtrigger(InputAction.CallbackContext context);
         void OnRtrigger(InputAction.CallbackContext context);
+    }
+    public interface IGameplayKeyboardActions
+    {
+        void OnMove(InputAction.CallbackContext context);
+        void OnX(InputAction.CallbackContext context);
+        void OnY(InputAction.CallbackContext context);
+        void OnA(InputAction.CallbackContext context);
+        void OnB(InputAction.CallbackContext context);
     }
 }
