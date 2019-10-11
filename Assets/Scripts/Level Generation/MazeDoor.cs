@@ -6,7 +6,9 @@ public class MazeDoor : MazePassage {
         base.Initialize(primary, other, direction);
         for (int i = 0; i < transform.childCount; i++) {
             Transform child = transform.GetChild(i);
-            child.GetComponent<Renderer>().material = cell.room.settings.wallMaterial;
+            if (child.name != "Trigger") {
+                child.GetComponent<Renderer>().material = cell.room.settings.wallMaterial;
+            }
         }
     }
 }

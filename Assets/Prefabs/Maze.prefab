@@ -70,3 +70,4 @@ MonoBehaviour:
     wallMaterial: {fileID: 2100000, guid: 96af7b91c0f01b64890a262803461fe4, type: 2}
   - floorMaterial: {fileID: 2100000, guid: b640223a40f43034ea7019ca18f56ac4, type: 2}
     wallMaterial: {fileID: 2100000, guid: ae4c75fdf90e0e042950a8f3e3ec4627, type: 2}
+  rooms: []

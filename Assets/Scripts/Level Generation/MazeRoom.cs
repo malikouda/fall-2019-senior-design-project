@@ -9,6 +9,10 @@ public class MazeRoom : ScriptableObject {
 
     public List<MazeCell> cells = new List<MazeCell>();
 
+    public GameObject ceiling;
+
+    public string roomName;
+
     public int size = 0;
 
     public void Add(MazeCell cell) {

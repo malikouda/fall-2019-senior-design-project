@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
@@ -8,7 +9,9 @@ public class GameManager : MonoBehaviour {
 
     public Character playerPrefab;
 
-    private Character playerInstance;
+    public List<Character> players = new List<Character>();
+
+    public List<MazeRoom> activeRooms = new List<MazeRoom>();
 
     void Start() {
         BeginGame();
@@ -17,22 +20,35 @@ public class GameManager : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             RestartGame();
-        }    
+        }
+
     }
 
     private void BeginGame() {
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
-        playerInstance = Instantiate(playerPrefab) as Character;
-        playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
+    }
 
+    public void Spawn() {
+        MazeCell startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
+        Character playerInstance = Instantiate(playerPrefab) as Character;
+        startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
+        playerInstance.SetLocation(startingCell);
+        playerInstance.gameManager = this;
+        playerInstance.currentRoom = startingCell.room;
+        if (activeRooms.Contains(playerInstance.currentRoom) != true) {
+            activeRooms.Add(playerInstance.currentRoom);
+            playerInstance.currentRoom.ceiling.gameObject.SetActive(false);
+        }
     }
 
     private void RestartGame() {
         Destroy(mazeInstance.gameObject);
-        if (playerInstance != null) {
-            Destroy(playerInstance.gameObject);
+        foreach(Character player in players) {
+            if (player != null) {
+                Destroy(player.gameObject);
+            }
         }
         BeginGame();
     }
