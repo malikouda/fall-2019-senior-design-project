@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size:
-    x: 20
+    x: 15
     z: 15
   cellPrefab: {fileID: 4475040146595141560, guid: 101807126f6fbee4f8d64071a2f9b9a5,
     type: 3}
@@ -53,6 +53,12 @@ MonoBehaviour:
   wallPrefab: {fileID: 4576173077289646066, guid: d456b5c10fdd0ef4b91f153dd4d8f6e3,
     type: 3}
   doorPrefab: {fileID: 4030603425640632344, guid: 87ca0228e83dde248ad02345e163e741,
+    type: 3}
+  ceilingPrefab: {fileID: 3200120599906045781, guid: 2439cf385fdf19f42af175248306f965,
+    type: 3}
+  ceilingCellPrefab: {fileID: 2564846006337858238, guid: cb3bec11e58779a4cb766420e81ba34c,
+    type: 3}
+  mazeRoomPrefab: {fileID: 653585297626500561, guid: 64a90310176b4ab4fb1ebcfe27955899,
     type: 3}
   doorProbability: 0.1
   roomSettings:
