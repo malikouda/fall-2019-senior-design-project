@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
         mazeInstance.gameObject.transform.localScale *= 3;
         playerInstance = Instantiate(playerPrefab) as Player;
         playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
+
     }
 
     private void RestartGame() {

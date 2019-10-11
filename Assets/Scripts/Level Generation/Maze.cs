@@ -11,6 +11,9 @@ public class Maze : MonoBehaviour {
     public MazePassage passagePrefab;
     public MazeWall wallPrefab;
     public MazeDoor doorPrefab;
+    public GameObject ceilingPrefab;
+    public GameObject ceilingCellPrefab;
+    public GameObject mazeRoomPrefab;
 
     [Range(0f, 1f)]
     public float doorProbability;
@@ -26,18 +29,22 @@ public class Maze : MonoBehaviour {
         while (activeCells.Count > 0) {
             DoNextGenerationStep(activeCells);
         }
-        /*
         for (int i = 0; i < rooms.Count; i++) {
-            if (rooms[i].size <= 1) {
-                MazeRoom room = rooms[i];
-                MazeCell cell = room.cells[0];
-                MazeRoom roomToAssimilate = GetCell(cell.RandomInitializedDirection.ToIntVector2()).room;
-                roomToAssimilate.Assimilate(room);
-                rooms.Remove(room);
-                Destroy(room);
+            GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
+            mazeRoom.name = "Maze Room " + (i + 1);
+            mazeRoom.transform.parent = transform;
+            GameObject ceiling = Instantiate(ceilingPrefab) as GameObject;
+            ceiling.transform.localPosition = mazeRoom.transform.localPosition;
+            ceiling.transform.parent = mazeRoom.transform;
+            ceiling.name = "Ceiling";
+            foreach (MazeCell cell in rooms[i].cells) {
+                cell.transform.parent = mazeRoom.transform;
+                GameObject ceilingCell = Instantiate(ceilingCellPrefab) as GameObject;
+                ceilingCell.name = "Ceiling Cell " + cell.coordinates.x + ", " + cell.coordinates.z;
+                ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
+                ceilingCell.transform.parent = ceiling.transform;
             }
         }
-        */
     }
 
     private MazeCell CreateCell(IntVector2 coordinates) {
@@ -102,7 +109,7 @@ public class Maze : MonoBehaviour {
         MazePassage passage = Instantiate(prefab) as MazePassage;
         passage.Initialize(cell, otherCell, direction);
         passage = Instantiate(prefab) as MazePassage;
-        if (passage is MazeDoor && cell.room.size> 1) {
+        if (passage is MazeDoor) {
             otherCell.Initialize(CreateRoom(cell.room.settingsIndex));
         }
         else {
