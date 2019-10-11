@@ -5,7 +5,7 @@ using UnityEngine;
 public class Maze : MonoBehaviour {
 
     public IntVector2 size;
-
+    
     public MazeCell cellPrefab;
     private MazeCell[,] cells;
     public MazePassage passagePrefab;

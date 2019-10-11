@@ -6,9 +6,9 @@ public class GameManager : MonoBehaviour {
 
     private Maze mazeInstance;
 
-    public Player playerPrefab;
+    public Character playerPrefab;
 
-    private Player playerInstance;
+    private Character playerInstance;
 
     void Start() {
         BeginGame();
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
-        playerInstance = Instantiate(playerPrefab) as Player;
+        playerInstance = Instantiate(playerPrefab) as Character;
         playerInstance.SetLocation(mazeInstance.GetCell(mazeInstance.RandomCoordinates));
     }
 

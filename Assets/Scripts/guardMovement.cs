@@ -7,14 +7,19 @@ public class guardMovement : MonoBehaviour {
 
     public float threshold;
 
+    private EnemyMind mind;
     private List<GameObject> waypoints;
     private List<Vector3> patrol;
     private int index;
     private NavMeshAgent mAgent;
     private int direction = 1;
+    private bool searching;
+    private Vector3 searchTarget;
     // Start is called before the first frame update
     void Start()
     {
+        mind = GetComponent<EnemyMind>();
+        searchTarget = Vector3.zero;
         mAgent = gameObject.GetComponent<NavMeshAgent>();
         patrol = new List<Vector3>();
         waypoints = new List<GameObject>();
@@ -62,9 +67,24 @@ public class guardMovement : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+
+        if (searching)
+        {
+            mAgent.destination = searchTarget;
+        }
+
         if (mAgent.remainingDistance < threshold) 
         {
+            if (searching)
+            {
+                mind.ChangeState(EnemyMind.STATES.PATROL);
+                searching = false;
+                mAgent.destination = patrol[index];
+                return;
+            }
+
             index += 1 * direction;
+
             if (index >= patrol.Count) 
             {
                 index = patrol.Count - 1;
@@ -77,8 +97,14 @@ public class guardMovement : MonoBehaviour {
                 direction = 1;
             }
 
-            
+            mAgent.destination = patrol[index];
         }
-        mAgent.destination = patrol[index];
+
+    }
+
+    public void investigate(Vector3 target)
+    {
+        searching = true;
+        searchTarget = target;
     }
 }

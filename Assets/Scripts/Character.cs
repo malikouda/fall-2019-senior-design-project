@@ -3,8 +3,11 @@ using UnityEngine.InputSystem;
 public class Character : MonoBehaviour
 {
     public enum BUTTONS {X,Y,A,B};
+    public enum ITEMS {TABLET};
     public float moveSpeed = 6f;
     public float rotateSpeed = 10f;
+
+
     Rigidbody rb;
     Vector3 moveDirection;
     float inputAmount;
@@ -13,8 +16,15 @@ public class Character : MonoBehaviour
     Vector2 move;
     minigame currntGame;
     controllerInput controller;
+    MazeCell currentCell;
 
     PlayerControls controls;
+
+    public void SetLocation(MazeCell cell)
+    {
+        currentCell = cell;
+        transform.localPosition = new Vector3(cell.transform.localPosition.x, 0.5f, cell.transform.localPosition.z);
+    }
     class controllerInput
     {
         public Vector2 move;

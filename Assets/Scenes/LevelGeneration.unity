@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazePrefab: {fileID: 4330255248282845672, guid: 09218179c6fbf76449539b969b89548c,
     type: 3}
-  playerPrefab: {fileID: 6780402023357780141, guid: 05135687c9559b140a5171b09cd9900e,
+  playerPrefab: {fileID: 7799201882339264958, guid: de6c1de915b24f24e80f5c551859b252,
     type: 3}
 --- !u!4 &934843956
 Transform:

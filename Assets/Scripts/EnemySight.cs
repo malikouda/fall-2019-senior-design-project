@@ -7,7 +7,7 @@ public class EnemySight : MonoBehaviour
 {
     public Sprite sightSprite;
     private Image sightImage;
-
+    private EnemyMind mind;
     [Tooltip("How long the player can be seen before being caught")]
     public float hideTime;
     [Tooltip("Multiplier for how long it takes the guard to forget about the player")]
@@ -24,6 +24,7 @@ public class EnemySight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mind = GetComponent<EnemyMind>();
         sightImage = GetComponentInChildren<Image>();
         hideTimeMax = hideTime;
     }
@@ -46,6 +47,11 @@ public class EnemySight : MonoBehaviour
                     if( hit.collider.tag == "Player")
                     {
                         hideTime -= Time.deltaTime + 1/Vector3.Distance(transform.position,p.transform.position);
+
+                        if (hideTime >= hideTimeMax/2)
+                        {
+                            mind.Investigate(p.gameObject.transform.position); 
+                        }
                         if (hideTime <= 0)
                         {
                             SceneManager.LoadScene(0);
