@@ -29,9 +29,11 @@ public class GameManager : MonoBehaviour {
     }
 
     private void BeginGame() {
+        
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
+        mazeInstance.gameObject.GetComponent<LocalNavMeshBuilder>().m_Tracked = GameObject.Find("Guard").transform;
     }
 
     public void Spawn() {
