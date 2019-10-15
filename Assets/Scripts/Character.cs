@@ -117,7 +117,7 @@ public class Character : MonoBehaviour
             touching = true;
             interactable = other.gameObject;
         }
-        if (other.tag == "minigame")
+        else if (other.tag == "minigame")
         {
             Debug.Log("enter game");
             currntGame = other.gameObject.GetComponent<minigame>();
@@ -127,16 +127,11 @@ public class Character : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Interactable")
-        {
-            touching = false;
-            interactable = null;
-        }
         if (other.tag == "minigame")
         {
             currntGame = null;
         }
-        if (other.tag == "roomChange") {
+        else if (other.tag == "roomChange") {
             MazeRoom otherRoom = other.gameObject.GetComponentInParent<MazeCell>().room;
             if (otherRoom != currentRoom) {
                 gameManager.activeRooms.Add(otherRoom);
