@@ -20,7 +20,7 @@ public class Maze : MonoBehaviour {
 
     public MazeRoomSettings[] roomSettings;
 
-    private List<MazeRoom> rooms = new List<MazeRoom>();
+    public List<MazeRoom> rooms = new List<MazeRoom>();
 
     public void Generate() {
         cells = new MazeCell[size.x, size.z];
@@ -37,6 +37,8 @@ public class Maze : MonoBehaviour {
             ceiling.transform.localPosition = mazeRoom.transform.localPosition;
             ceiling.transform.parent = mazeRoom.transform;
             ceiling.name = "Ceiling";
+            rooms[i].ceiling = ceiling;
+            rooms[i].roomName = mazeRoom.name;
             foreach (MazeCell cell in rooms[i].cells) {
                 cell.transform.parent = mazeRoom.transform;
                 GameObject ceilingCell = Instantiate(ceilingCellPrefab) as GameObject;
@@ -59,7 +61,7 @@ public class Maze : MonoBehaviour {
 
     public IntVector2 RandomCoordinates {
         get {
-            return new IntVector2(Random.Range(0, size.x), Random.Range(0, size.z));
+            return new IntVector2(Random.Range(1, size.x), Random.Range(1, size.z));
         }
     }
 

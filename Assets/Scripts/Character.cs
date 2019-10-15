@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+
 public class Character : MonoBehaviour
 {
     public enum BUTTONS {X,Y,A,B};
     public enum ITEMS {TABLET};
     public float moveSpeed = 6f;
     public float rotateSpeed = 10f;
+    public MazeRoom currentRoom;
+    public GameManager gameManager;
 
 
     Rigidbody rb;
@@ -23,7 +26,7 @@ public class Character : MonoBehaviour
     public void SetLocation(MazeCell cell)
     {
         currentCell = cell;
-        transform.localPosition = new Vector3(cell.transform.localPosition.x, 0.5f, cell.transform.localPosition.z);
+        transform.localPosition = new Vector3(cell.transform.localPosition.x * 3f, 0.5f, cell.transform.localPosition.z * 3f);
     }
     class controllerInput
     {
@@ -53,11 +56,6 @@ public class Character : MonoBehaviour
         controls.Gameplay.move.canceled += ctx => move = Vector2.zero;
         controller = new controllerInput();
         controls.Enable();
-    }
-
-    private void Start()
-    {
-
     }
 
     private void Update()
@@ -136,6 +134,21 @@ public class Character : MonoBehaviour
         {
             currntGame = null;
         }
+        if (other.tag == "roomChange") {
+            MazeRoom otherRoom = other.gameObject.GetComponentInParent<MazeCell>().room;
+            if (otherRoom != currentRoom) {
+                gameManager.activeRooms.Add(otherRoom);
+                gameManager.activeRooms.Remove(currentRoom);
+                if (!gameManager.activeRooms.Contains(currentRoom)) {
+                    currentRoom.ceiling.gameObject.SetActive(true);
+                    otherRoom.ceiling.gameObject.SetActive(false);
+                }
+                else {
+                    otherRoom.ceiling.gameObject.SetActive(false);
+                }
+                currentRoom = otherRoom;
+            }
+        }
     }
 
     public void OnX()
@@ -157,8 +170,6 @@ public class Character : MonoBehaviour
     {
         controller.a = true;
     }
-
-
 
 
 

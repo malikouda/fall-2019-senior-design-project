@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6088447396166002455}
   - component: {fileID: 4330255248282845672}
-  - component: {fileID: 4861723578511182272}
   m_Layer: 0
   m_Name: Maze
   m_TagString: Untagged
@@ -71,18 +70,4 @@ MonoBehaviour:
     wallMaterial: {fileID: 2100000, guid: 96af7b91c0f01b64890a262803461fe4, type: 2}
   - floorMaterial: {fileID: 2100000, guid: b640223a40f43034ea7019ca18f56ac4, type: 2}
     wallMaterial: {fileID: 2100000, guid: ae4c75fdf90e0e042950a8f3e3ec4627, type: 2}
---- !u!114 &4861723578511182272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9028444796112422218}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 428533515797cfc4582010520866f909, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  resolution: 0
-  XCoord: 0
-  ZCoord: 0
+  rooms: []
