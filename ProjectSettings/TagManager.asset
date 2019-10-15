@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - minigame
   - roomChange
+  - room
+  - cell
   layers:
   - Default
   - TransparentFX
