@@ -3,13 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Waypoint
-  - Ground
-  - minigame
-  - roomChange
-  - room
-  - cell
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -19,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - Environment
+  - 
   - 
   - 
   - 
