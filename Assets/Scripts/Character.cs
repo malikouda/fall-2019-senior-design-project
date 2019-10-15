@@ -7,7 +7,9 @@ public class Character : MonoBehaviour
     public enum ITEMS {TABLET};
     public float moveSpeed = 6f;
     public float rotateSpeed = 10f;
+    [HideInInspector]
     public MazeRoom currentRoom;
+    [HideInInspector]
     public GameManager gameManager;
 
 

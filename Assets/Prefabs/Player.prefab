@@ -184,6 +184,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e9e0e769-0599-4d59-bdf6-2d490b93bd87
     m_ActionName: Gameplay/Rtrigger[/USB Gamepad /button6,/USB Gamepad /button6]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 77fe1f41-7b8a-4f3f-9a6b-94c9a821ab97
+    m_ActionName: Gameplay(Keyboard)/move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 54bfc992-fb6e-4403-81ea-5b00cdfcbbdb
+    m_ActionName: Gameplay(Keyboard)/x[/Keyboard/o]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 83576b09-3814-4785-a1cf-df06a5935296
+    m_ActionName: Gameplay(Keyboard)/y[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 28bafbc2-297a-40b9-9b6f-71c5f95c28b8
+    m_ActionName: Gameplay(Keyboard)/a[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88dfd09a-be26-4235-85dd-492491683fc0
+    m_ActionName: Gameplay(Keyboard)/b[/Keyboard/l]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: fbfad7ac-7f89-47d6-8cdd-37517a086dc4
@@ -203,3 +223,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   rotateSpeed: 10
+  currentRoom: {fileID: 0}
+  gameManager: {fileID: 0}

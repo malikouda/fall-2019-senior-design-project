@@ -9,8 +9,9 @@ public class GameManager : MonoBehaviour {
 
     public Character playerPrefab;
 
+    [HideInInspector]
     public List<Character> players = new List<Character>();
-
+    [HideInInspector]
     public List<MazeRoom> activeRooms = new List<MazeRoom>();
 
     void Start() {
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour {
     void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             RestartGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            Spawn();
         }
 
     }
