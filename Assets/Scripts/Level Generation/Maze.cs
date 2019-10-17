@@ -39,13 +39,13 @@ public class Maze : MonoBehaviour {
             GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
+            rooms[i].roomName = mazeRoom.name;
             if (gm.generateCeilings) {
                 GameObject ceiling = Instantiate(ceilingPrefab) as GameObject;
                 ceiling.transform.localPosition = mazeRoom.transform.localPosition;
                 ceiling.transform.parent = mazeRoom.transform;
                 ceiling.name = "Ceiling";
                 rooms[i].ceiling = ceiling;
-                rooms[i].roomName = mazeRoom.name;
                 foreach (MazeCell cell in rooms[i].cells) {
                     cell.transform.parent = mazeRoom.transform;
                     GameObject ceilingCell = Instantiate(ceilingCellPrefab) as GameObject;

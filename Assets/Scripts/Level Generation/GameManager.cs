@@ -30,15 +30,13 @@ public class GameManager : MonoBehaviour {
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
-        patrolCreation.instance.makePatrols();
+        //patrolCreation.instance.makePatrols();
     }
 
-    public void Spawn() {
+    public void Spawn(Character playerInstance) {
         MazeCell startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
-        Character playerInstance = Instantiate(playerPrefab) as Character;
         startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
         playerInstance.SetLocation(startingCell);
-        playerInstance.gameManager = this;
         playerInstance.currentRoom = startingCell.room;
         if (activeRooms.Contains(playerInstance.currentRoom) != true) {
             activeRooms.Add(playerInstance.currentRoom);

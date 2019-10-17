@@ -60,6 +60,10 @@ public class Character : MonoBehaviour
         controls.Enable();
     }
 
+    private void Start() {
+        gameManager.Spawn(this);
+    }
+
     private void Update()
     {
         
