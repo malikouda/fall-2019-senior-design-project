@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public List<MazeRoom> activeRooms = new List<MazeRoom>();
 
+    public bool generateCeilings = false;
+
     void Start() {
         BeginGame();
     }
@@ -22,14 +24,9 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             RestartGame();
         }
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            Spawn();
-        }
-
     }
 
     private void BeginGame() {
-        
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;

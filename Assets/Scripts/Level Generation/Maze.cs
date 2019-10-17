@@ -22,6 +22,12 @@ public class Maze : MonoBehaviour {
 
     public List<MazeRoom> rooms = new List<MazeRoom>();
 
+    public GameManager gm;
+
+    public void Awake() {
+        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+    }
+
     public void Generate() {
         cells = new MazeCell[size.x, size.z];
         List<MazeCell> activeCells = new List<MazeCell>();
@@ -33,18 +39,20 @@ public class Maze : MonoBehaviour {
             GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
-            GameObject ceiling = Instantiate(ceilingPrefab) as GameObject;
-            ceiling.transform.localPosition = mazeRoom.transform.localPosition;
-            ceiling.transform.parent = mazeRoom.transform;
-            ceiling.name = "Ceiling";
-            rooms[i].ceiling = ceiling;
-            rooms[i].roomName = mazeRoom.name;
-            foreach (MazeCell cell in rooms[i].cells) {
-                cell.transform.parent = mazeRoom.transform;
-                GameObject ceilingCell = Instantiate(ceilingCellPrefab) as GameObject;
-                ceilingCell.name = "Ceiling Cell " + cell.coordinates.x + ", " + cell.coordinates.z;
-                ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
-                ceilingCell.transform.parent = ceiling.transform;
+            if (gm.generateCeilings) {
+                GameObject ceiling = Instantiate(ceilingPrefab) as GameObject;
+                ceiling.transform.localPosition = mazeRoom.transform.localPosition;
+                ceiling.transform.parent = mazeRoom.transform;
+                ceiling.name = "Ceiling";
+                rooms[i].ceiling = ceiling;
+                rooms[i].roomName = mazeRoom.name;
+                foreach (MazeCell cell in rooms[i].cells) {
+                    cell.transform.parent = mazeRoom.transform;
+                    GameObject ceilingCell = Instantiate(ceilingCellPrefab) as GameObject;
+                    ceilingCell.name = "Ceiling Cell " + cell.coordinates.x + ", " + cell.coordinates.z;
+                    ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
+                    ceilingCell.transform.parent = ceiling.transform;
+                }
             }
         }
     }
