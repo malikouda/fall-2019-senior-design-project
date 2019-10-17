@@ -31,18 +31,22 @@ public class patrolCreation : MonoBehaviour
         foreach (GameObject g in rooms)
         {
             List<Vector3> cells = new List<Vector3>();
-            foreach (Transform c in g.GetComponentInChildren<GameObject>().transform)
+            foreach (Transform child in transform)
             {
-                if (c.gameObject.tag == "cell")
+                if (child.gameObject.tag == "cell")
                 {
-                    cells.Add(c.gameObject.transform.position);
-                    c.gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
+                    cells.Add(child.gameObject.transform.position);
+                    child.gameObject.GetComponent<NavMeshSurface>().BuildNavMesh();
                 }
             }
-            points.Add(cells[Random.Range(0, cells.Count - 1)]);
+            if (cells.Count != 0)
+            {
+                points.Add(cells[Random.Range(0, cells.Count)]);
+
+            }
         }
 
-        GameObject.Find("Guard").GetComponent<NavMeshAgent>().SetDestination(points[Random.Range(0, points.Count - 1)]);
+        GameObject.Find("Guard").GetComponent<NavMeshAgent>().SetDestination(new Vector3(4,0,4));
 
 
 

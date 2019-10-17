@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
-        mazeInstance.gameObject.GetComponent<LocalNavMeshBuilder>().m_Tracked = GameObject.Find("Guard").transform;
+        patrolCreation.instance.makePatrols();
     }
 
     public void Spawn() {
