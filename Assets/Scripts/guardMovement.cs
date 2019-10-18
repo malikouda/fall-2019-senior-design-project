@@ -6,9 +6,8 @@ public class guardMovement : MonoBehaviour {
 
 
     public float threshold;
-
+    
     private EnemyMind mind;
-    private List<GameObject> waypoints;
     private List<Vector3> patrol;
     private int index;
     private NavMeshAgent mAgent;
@@ -21,47 +20,14 @@ public class guardMovement : MonoBehaviour {
         mind = GetComponent<EnemyMind>();
         searchTarget = Vector3.zero;
         mAgent = gameObject.GetComponent<NavMeshAgent>();
-        patrol = new List<Vector3>();
-        waypoints = new List<GameObject>();
-        foreach (GameObject waypoint in GameObject.FindGameObjectsWithTag("Waypoint")) 
-        {
-            waypoints.Add(waypoint);
-        }
         GameObject current = gameObject;
-        int total = waypoints.Count;
-        while (patrol.Count < total) {
-            GameObject next = findClosestPoint(current);
-            patrol.Add(next.transform.position);
-            waypoints.Remove(current);
-            current = next;
-        }
-
         Vector3 lastpoint = transform.position;
-        foreach (Vector3 point in patrol) 
-        {
-            Debug.DrawLine(lastpoint, point,Color.red,100);
-            lastpoint = point;
-        }
     }
 
-    GameObject findClosestPoint(GameObject current) 
+    public void assignPatrol(List<Vector3> newPatrol)
     {
-        float minDist = Mathf.Infinity;
-        GameObject point = null;
-        foreach (GameObject waypoint in waypoints) 
-        {
-            if (waypoint != current) 
-            {
-                float dist = Vector3.Distance(current.transform.position, waypoint.transform.position);
-                if (dist < minDist) {
-                    minDist = dist;
-                    point = waypoint;
-                }
-            }
-
-        }
-
-        return point;
+        patrol = new List<Vector3>();
+        patrol = newPatrol;
     }
     
     // Update is called once per frame
@@ -82,21 +48,8 @@ public class guardMovement : MonoBehaviour {
                 mAgent.destination = patrol[index];
                 return;
             }
-
-            index += 1 * direction;
-
-            if (index >= patrol.Count) 
-            {
-                index = patrol.Count - 1;
-                direction = -1;
-            }
-
-            if (index < 0) 
-            {
-                index = 0;
-                direction = 1;
-            }
-
+            Debug.Log(index);
+            index = (index + 1) % patrol.Count;
             mAgent.destination = patrol[index];
         }
 
