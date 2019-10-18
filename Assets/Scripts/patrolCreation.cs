@@ -10,45 +10,47 @@ public class patrolCreation : MonoBehaviour
     [Tooltip("The number of guards to be instantiated")]
     public int NumGuards;
     private NavMeshAgent agent;
+    private const float equalityThreshold = 3;
     private List<point> points;
 
     
     public class point
     {
         public Vector3 pos;
-        public List<edge> edges;
+        public List<point> adj;
         public point (Vector3 pos)
         {
-            edges = new List<edge>();
+            adj = new List<point>();
             this.pos = pos;
         }
 
         public void assignEdge (edge e)
         {
-            this.edges.Add(e);
+            if (e.start != this)
+            {
+                adj.Add(e.start);
+            }
+            if (e.end != this)
+            {
+                adj.Add(e.end);
+            }
         }
 
         public void removeEdge (edge e)
         {
-            this.edges.Remove(e);
+            if (e.start != this)
+            {
+                adj.Remove(e.start);
+            }
+            if (e.end != this)
+            {
+                adj.Remove(e.end);
+            }
         }
 
         public List<point> getAdj()
         {
-            List<point> output = new List<point>();
-            foreach(edge e in edges)
-            {
-                if (e.start != this)
-                {
-                    output.Add(e.start);
-                }
-                if (e.end != this)
-                {
-                    output.Add(e.end);
-                }
-            }
-
-            return output;
+            return adj;
         }
     }
 
@@ -127,20 +129,7 @@ public class patrolCreation : MonoBehaviour
             end.removeEdge(this);
         }
 
-        public List<edge> listEdges()
-        {
-            List<edge> output = new List<edge>();
-            foreach (edge e in end.edges)
-            {
-                output.Add(e);
-            }
-            foreach (edge e in start.edges)
-            {
-                output.Add(e);
-            }
 
-            return output;
-        }
         int IComparer<edge>.Compare(edge a, edge b)
         {
             if (a.dist < b.dist)
@@ -172,31 +161,35 @@ public class patrolCreation : MonoBehaviour
         instance.makePatrols();
     }
 
-
-    private bool wouldMakeCyclical(edge e)
+    //Would adding  the edge cause the graph to be cyclical
+    private bool wouldMakeCyclical(edge e, List<point> points)
     {
         e.addtoTree();
         List<point> v = new List<point>();
-        v.Add(e.start);
         Stack<point> nextPoints = new Stack<point>();
-        foreach (point p in e.start.getAdj())
+        foreach (point p in points)
         {
-            nextPoints.Push(p);
+            //if the point hasn't already been checked
+            if (!v.Contains(p))
+            {
+                nextPoints.Push(p);
+                if (isCyclical(nextPoints, v, p, out v))
+                {
+                    e.removeFromTree();
+                    return true;
+                }
+            }
+
         }
-        if (isCyclical(nextPoints, v, e.start))
-        {
-            e.removeFromTree();
-            return true;
-        }else
-        {
-            return false;
-        }
+        return false;
     }
 
-    private bool isCyclical(Stack<point> current,List<point> visited, point parent)
+    //is this graph cyclical
+    private bool isCyclical(Stack<point> current, List<point> visited, point parent, out List<point> newVisted)
     {
         if (current.Count == 0)
         {
+            newVisted = new List<point>(visited);
             return false;
         }
         point nextPoint = current.Pop();
@@ -208,24 +201,27 @@ public class patrolCreation : MonoBehaviour
             {
                 if (p != parent)
                 {
+                    newVisted = new List<point>(visited);
                     return true;
                 }
 
             }else
             {
                 current.Push(p);
-                if (isCyclical(current, visited, p))
+                if (isCyclical(current, visited, nextPoint,out newVisted))
                 {
+                    newVisted = new List<point>(visited);
                     return true;
                 }
             }
 
         }
-
+        newVisted = new List<point>(visited);
         return false;
     }
-    //creates a minimum spanning tree
-    public void makePatrols()
+
+    //creates patrol patterns by selecting random points in each room and connecting them
+    private void makePatrols()
     {
         
         //gets a random point from each generated maze room
@@ -275,10 +271,10 @@ public class patrolCreation : MonoBehaviour
         List<edge> patrol = new List<edge>();
         int totalEdges = 0;
         int index = 0;
-        while(totalEdges < points.Count -1)
+        while(totalEdges <= points.Count -1)
         {
 
-            if (wouldMakeCyclical(map[index]))
+            if (!wouldMakeCyclical(map[index],points))
             {
                 totalEdges++;
                 patrol.Add(map[index]);
@@ -293,15 +289,72 @@ public class patrolCreation : MonoBehaviour
 
         }
 
-        
-        foreach (edge e in patrol)
-        {
-            e.showEdge();
-        }
-        
+        AssignRoutes(patrol);
 
 
 
 
     }
+    
+    private edge getEdge(point a, point b, List<edge> graph)
+    {
+        foreach(edge e in graph)
+        {
+            if ((e.start == a || e.end == a) && (e.start == b || e.end == b))
+            {
+                return e;
+            }
+        }
+
+        return null;
+    }
+
+    private void AssignRoutes(List<edge> totalPatrol)
+    {
+        
+    }
+
+    private void subdivideGraph (List<edge> sourceGraph)
+    {
+        List<edge> tempGraph = new List<edge>(sourceGraph);
+        Dictionary<edge, float> possibleGraphs = new Dictionary<edge, float>();
+        foreach(edge e in tempGraph)
+        {
+            e.removeFromTree();
+            Stack <point> aStack = new Stack<point>();
+            aStack.Push(e.start);
+            Stack<point> bStack = new Stack<point>();
+            bStack.Push(e.end);
+            float aDist = graphTraversal(aStack, new List<point>(), 0f,sourceGraph);
+            float bDist = graphTraversal(bStack, new List<point>(), 0f,sourceGraph);
+
+            
+
+            possibleGraphs.Add(e, Mathf.Abs(aDist - bDist));
+            e.addtoTree();
+        }
+
+    }
+
+    float graphTraversal(Stack<point> points, List<point> visited, float totalDist,List<edge> sourceGraph)
+    {
+        if (points.Count == 0)
+        {
+            return totalDist;
+        }
+
+        point current = points.Pop();
+        visited.Add(current);
+        foreach (point p in current.adj)
+        {
+            if (!visited.Contains(p))
+            {
+                totalDist += getEdge(p, current,sourceGraph).dist;
+                points.Push(p);
+            }
+        }
+
+        return totalDist;
+    }
+
 }

@@ -36,8 +36,9 @@ public class GameManager : MonoBehaviour {
 
     private void paths()
     {
-        patrolCreation.instance.makePatrols();
+        patrolCreation.createPatrols();
     }
+
     public void Spawn(Character playerInstance) {
         players.Add(playerInstance);
         MazeCell startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);

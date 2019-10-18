@@ -436,7 +436,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   activeRooms: []
-  generateCeilings: 1
+  generateCeilings: 0
 --- !u!4 &934843956
 Transform:
   m_ObjectHideFlags: 0
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428533515797cfc4582010520866f909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumGuards: 0
+  NumGuards: 1
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

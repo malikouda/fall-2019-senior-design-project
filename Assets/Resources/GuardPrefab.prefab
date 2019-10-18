@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 407927620928033739}
   - component: {fileID: 143093776}
   m_Layer: 0
-  m_Name: Guard
+  m_Name: GuardPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 7124554630049233112}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.4156, y: 2.4156, z: 2.4156}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6901811874954934215}
   - {fileID: 3107413602124514742}
