@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public Maze mazePrefab;
 
@@ -39,15 +40,15 @@ public class GameManager : MonoBehaviour {
         startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
         playerInstance.SetLocation(startingCell);
         playerInstance.currentRoom = startingCell.room;
-        if (activeRooms.Contains(playerInstance.currentRoom) != true) {
+        if (generateCeilings) {
             activeRooms.Add(playerInstance.currentRoom);
-            playerInstance.currentRoom.ceiling.gameObject.SetActive(false);
+            playerInstance.currentRoom.ceiling.GetComponent<Ceiling>().fadeOut = true;
         }
     }
 
     private void RestartGame() {
         Destroy(mazeInstance.gameObject);
-        foreach(Character player in players) {
+        foreach (Character player in players) {
             if (player != null) {
                 Destroy(player.gameObject);
             }
@@ -55,4 +56,18 @@ public class GameManager : MonoBehaviour {
         BeginGame();
     }
 
+    public void SetLayerRecursively(GameObject obj, int newLayer) {
+        if (null == obj) {
+            return;
+        }
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform) {
+            if (null == child) {
+                continue;
+            }
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
 }

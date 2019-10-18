@@ -8,6 +8,10 @@ TagManager:
   - room
   - Interactable
   - roomChange
+  - ceilingCell
+  - mazeWall
+  - mazeDoor
+  - ceiling
   layers:
   - Default
   - TransparentFX
@@ -17,8 +21,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Lit
+  - Unlit
   - 
   - 
   - 

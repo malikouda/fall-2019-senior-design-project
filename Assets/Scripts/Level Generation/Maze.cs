@@ -40,6 +40,7 @@ public class Maze : MonoBehaviour {
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
             rooms[i].roomName = mazeRoom.name;
+            rooms[i].parent = mazeRoom;
             if (gm.generateCeilings) {
                 GameObject ceiling = Instantiate(ceilingPrefab) as GameObject;
                 ceiling.transform.localPosition = mazeRoom.transform.localPosition;
@@ -53,6 +54,24 @@ public class Maze : MonoBehaviour {
                     ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
                     ceilingCell.transform.parent = ceiling.transform;
                 }
+
+                MeshFilter[] meshFilters = rooms[i].ceiling.GetComponentsInChildren<MeshFilter>();
+                CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+                int j = 0;
+                while (j < meshFilters.Length) {
+                    combine[j].mesh = meshFilters[j].sharedMesh;
+                    combine[j].transform = meshFilters[j].transform.localToWorldMatrix;
+                    meshFilters[j].gameObject.SetActive(false);
+                    if (meshFilters[j].gameObject.tag == "ceilingCell") {
+                        Destroy(meshFilters[j].gameObject);
+                    }
+
+                    j++;
+                }
+                rooms[i].ceiling.transform.GetComponent<MeshFilter>().mesh = new Mesh();
+                rooms[i].ceiling.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+                rooms[i].ceiling.transform.gameObject.SetActive(true);
             } else {
                 foreach (MazeCell cell in rooms[i].cells) {
                     cell.transform.parent = mazeRoom.transform;

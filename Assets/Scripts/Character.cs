@@ -143,17 +143,21 @@ public class Character : MonoBehaviour
         {
             currntGame = null;
         }
-        else if (other.tag == "roomChange") {
+        else if (other.tag == "roomChange" && gameManager.generateCeilings) {
             MazeRoom otherRoom = other.gameObject.GetComponentInParent<MazeCell>().room;
             if (otherRoom != currentRoom) {
                 gameManager.activeRooms.Add(otherRoom);
                 gameManager.activeRooms.Remove(currentRoom);
                 if (!gameManager.activeRooms.Contains(currentRoom)) {
-                    currentRoom.ceiling.gameObject.SetActive(true);
-                    otherRoom.ceiling.gameObject.SetActive(false);
+                    currentRoom.ceiling.GetComponent<Ceiling>().fadeIn = true;
+                    currentRoom.ceiling.GetComponent<Ceiling>().fadeOut = false;
+                    otherRoom.ceiling.GetComponent<Ceiling>().fadeOut = true;
+                    otherRoom.ceiling.GetComponent<Ceiling>().fadeIn = false;
+
                 }
                 else {
-                    otherRoom.ceiling.gameObject.SetActive(false);
+                    otherRoom.ceiling.GetComponent<Ceiling>().fadeOut = true;
+                    otherRoom.ceiling.GetComponent<Ceiling>().fadeIn = false;
                 }
                 currentRoom = otherRoom;
             }

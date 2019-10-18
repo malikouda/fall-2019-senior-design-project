@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5409798479109163769}
   - component: {fileID: 761857365479523471}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trigger
   m_TagString: roomChange
   m_Icon: {fileID: 0}
@@ -54,9 +54,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9040250619464575645}
   - component: {fileID: 4030603425640632344}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Maze Door
-  m_TagString: Untagged
+  m_TagString: mazeDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 9040250619522107102}
   - component: {fileID: 9040250619522107103}
   - component: {fileID: 9040250619522107072}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 9040250619999350816}
   - component: {fileID: 9040250619999350817}
   - component: {fileID: 9040250619999350818}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 9040250620490819738}
   - component: {fileID: 9040250620490819739}
   - component: {fileID: 9040250620490819740}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}

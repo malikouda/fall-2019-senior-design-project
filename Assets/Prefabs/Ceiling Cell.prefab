@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4381283193559478756}
   - component: {fileID: 268097483278439570}
   - component: {fileID: 4641025445751974581}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ceiling Cell
-  m_TagString: Untagged
+  m_TagString: ceilingCell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
