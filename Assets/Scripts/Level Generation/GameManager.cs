@@ -30,9 +30,14 @@ public class GameManager : MonoBehaviour {
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
-        //patrolCreation.instance.makePatrols();
+        Invoke("paths",1);
     }
 
+
+    private void paths()
+    {
+        patrolCreation.instance.makePatrols();
+    }
     public void Spawn(Character playerInstance) {
         MazeCell startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
         startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
