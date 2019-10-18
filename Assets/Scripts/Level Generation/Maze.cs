@@ -53,6 +53,10 @@ public class Maze : MonoBehaviour {
                     ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
                     ceilingCell.transform.parent = ceiling.transform;
                 }
+            } else {
+                foreach (MazeCell cell in rooms[i].cells) {
+                    cell.transform.parent = mazeRoom.transform;
+                }
             }
         }
     }

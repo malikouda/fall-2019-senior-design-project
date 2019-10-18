@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetMouseButtonDown(0)) {
             RestartGame();
         }
     }
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Spawn(Character playerInstance) {
+        players.Add(playerInstance);
         MazeCell startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
         startingCell = mazeInstance.GetCell(mazeInstance.RandomCoordinates);
         playerInstance.SetLocation(startingCell);
