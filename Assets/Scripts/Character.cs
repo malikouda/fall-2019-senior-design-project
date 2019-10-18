@@ -61,6 +61,8 @@ public class Character : MonoBehaviour
     }
 
     private void Start() {
+        rb = GetComponent<Rigidbody>();
+        gameManager = FindObjectOfType<GameManager>();
         gameManager.Spawn(this);
     }
 
@@ -73,7 +75,9 @@ public class Character : MonoBehaviour
         moveDirection = new Vector3(combinedInput.normalized.x, 0, combinedInput.normalized.z);
         if (moveDirection != Vector3.zero)
         {
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+            Quaternion rot = Quaternion.LookRotation(moveDirection);
+            Quaternion targetRotation = Quaternion.Slerp(transform.rotation, rot, Time.fixedDeltaTime * rotateSpeed);
+            transform.rotation = targetRotation;
         }
 
         if (controller.x)
@@ -112,6 +116,10 @@ public class Character : MonoBehaviour
 
         controller.resetinput();
         return;
+    }
+
+    private void FixedUpdate() {
+        rb.velocity = (moveDirection * moveSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
