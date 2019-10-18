@@ -368,7 +368,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   activeRooms: []
-  generateCeilings: 0
+  generateCeilings: 1
 --- !u!4 &934843956
 Transform:
   m_ObjectHideFlags: 0
