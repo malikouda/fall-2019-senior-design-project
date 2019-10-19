@@ -48,7 +48,7 @@ MonoBehaviour:
     z: 15
   cellPrefab: {fileID: 4475040146595141560, guid: 101807126f6fbee4f8d64071a2f9b9a5,
     type: 3}
-  passagePrefab: {fileID: 6029829140343987861, guid: 97043e3be90ea43439d545c270a227e9,
+  passagePrefab: {fileID: 6029829140343987861, guid: a901e1f7abb604a68ae1a3273ea41cb3,
     type: 3}
   wallPrefab: {fileID: 4576173077289646066, guid: d456b5c10fdd0ef4b91f153dd4d8f6e3,
     type: 3}

@@ -60,6 +60,7 @@ public class patrolCreation : MonoBehaviour
         public point start;
         public point end;
         public float dist;
+        public List<edge> adj;
         private NavMeshPath path = new NavMeshPath();
 
         public edge (point start,point end)
@@ -311,29 +312,105 @@ public class patrolCreation : MonoBehaviour
 
     private void AssignRoutes(List<edge> totalPatrol)
     {
-        
+        if (NumGuards > 1)
+        {
+            edge removedEdge = subdivideGraph(totalPatrol);
+            List<Vector3> a = convertToVector3(getAllPoints(removedEdge.start));
+            List<Vector3> b = convertToVector3(getAllPoints(removedEdge.end));
+            GameObject guard1 = Instantiate(Resources.Load("GuardPrefab"), a[0], Quaternion.identity) as GameObject;
+            GameObject guard2 = Instantiate(Resources.Load("GuardPrefab"), b[0], Quaternion.identity) as GameObject;
+            guard1.GetComponent<guardMovement>().assignPatrol(a,Color.red);
+            guard2.GetComponent<guardMovement>().assignPatrol(b,Color.blue);
+        }
+        else
+        {
+            GameObject guard = Instantiate(Resources.Load("GuardPrefab"), totalPatrol[0].start.pos, Quaternion.identity) as GameObject;
+            guard.GetComponent<guardMovement>().assignPatrol(convertToVector3(getAllPoints(totalPatrol[0].start)),Color.blue);
+        }
     }
 
-    private void subdivideGraph (List<edge> sourceGraph)
+    private List<edge> getAllEdges(List<point> subset,List<edge> map)
+    {
+        List<edge> output = new List<edge>();
+        foreach(point p in subset)
+        {
+            foreach (point adj in p.adj)
+            {
+                output.Add(getEdge(p, adj, map));
+            }
+        }
+
+        return output;
+    }
+
+    private List<point> getAllPoints(point start)
+    {
+        List<point> output = new List<point>();
+        Stack<point> nextPoints = new Stack<point>();
+        nextPoints.Push(start);
+        while (nextPoints.Count > 0)
+        {
+            point currentPoint = nextPoints.Pop();
+            foreach (point p in currentPoint.adj)
+            {
+                if (!output.Contains(p))
+                {
+                    output.Add(p);
+                    nextPoints.Push(p);
+                }
+            }
+        }
+
+        return output;
+    }
+
+    private List<Vector3> convertToVector3 (List<point> points)
+    {
+        List<Vector3> vectors = new List<Vector3>();
+        foreach (point p in points)
+        {
+            vectors.Add(p.pos);
+        }
+
+        return vectors;
+    }
+
+    private edge subdivideGraph (List<edge> sourceGraph)
     {
         List<edge> tempGraph = new List<edge>(sourceGraph);
         Dictionary<edge, float> possibleGraphs = new Dictionary<edge, float>();
         foreach(edge e in tempGraph)
         {
+            //remove an edge from the tree, turning it into 2 trees
             e.removeFromTree();
+
+            //create one stack for both new trees
             Stack <point> aStack = new Stack<point>();
             aStack.Push(e.start);
             Stack<point> bStack = new Stack<point>();
             bStack.Push(e.end);
+
+            //determine the total distance of both trees
             float aDist = graphTraversal(aStack, new List<point>(), 0f,sourceGraph);
             float bDist = graphTraversal(bStack, new List<point>(), 0f,sourceGraph);
 
-            
-
+            //store the edge with the difference between the two trees in a dict
             possibleGraphs.Add(e, Mathf.Abs(aDist - bDist));
             e.addtoTree();
         }
 
+        float minDiff = Mathf.Infinity;
+        edge removeEdge = null;
+
+        foreach (edge e in possibleGraphs.Keys)
+        {
+            if (possibleGraphs[e] < minDiff)
+            {
+                minDiff = possibleGraphs[e];
+                removeEdge = e;
+            }
+        }
+        return removeEdge;
     }
 
     float graphTraversal(Stack<point> points, List<point> visited, float totalDist,List<edge> sourceGraph)
@@ -342,17 +419,20 @@ public class patrolCreation : MonoBehaviour
         {
             return totalDist;
         }
-
-        point current = points.Pop();
-        visited.Add(current);
-        foreach (point p in current.adj)
+        while (points.Count > 0)
         {
-            if (!visited.Contains(p))
+            point current = points.Pop();
+            visited.Add(current);
+            foreach (point p in current.adj)
             {
-                totalDist += getEdge(p, current,sourceGraph).dist;
-                points.Push(p);
+                if (!visited.Contains(p))
+                {
+                    totalDist += getEdge(p, current, sourceGraph).dist;
+                    points.Push(p);
+                }
             }
         }
+
 
         return totalDist;
     }

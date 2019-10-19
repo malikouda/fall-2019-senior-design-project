@@ -301,7 +301,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33aab68818b7f94498d4e3919472450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  threshold: 2
+  threshold: 0.1
+  minWaitTime: 0
+  MaxWaitTime: 5
 --- !u!195 &1536507241829424795
 NavMeshAgent:
   m_ObjectHideFlags: 0
