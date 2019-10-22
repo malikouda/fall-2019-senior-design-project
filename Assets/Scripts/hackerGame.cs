@@ -12,11 +12,14 @@ public class hackerGame : MonoBehaviour, minigame
     private int correctInput;
     private Text playText;
     private Animator anim;
+
+    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         playText = GetComponentInChildren<Text>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     public void displayNext(int next)
@@ -53,7 +56,7 @@ public class hackerGame : MonoBehaviour, minigame
         correctInput = 0;
         for (int i = 0; i <= length; i++)
         {
-            pattern.Add(Random.Range(0, 3));
+            pattern.Add(Random.Range(0, 4));
         }
 
         displayNext(pattern[0]);
@@ -71,6 +74,7 @@ public class hackerGame : MonoBehaviour, minigame
                 Debug.Log("WIN");
                 correctInput = 0;
                 Destroy(gameObject);
+                gameManager.numObjectives--;
             }
 
             displayNext(pattern[correctInput]);

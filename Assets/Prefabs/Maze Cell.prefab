@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2707601811817994114}
   - component: {fileID: 4475040146595141560}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Maze Cell
   m_TagString: cell
   m_Icon: {fileID: 0}

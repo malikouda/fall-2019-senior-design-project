@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6088447396166002455}
   - component: {fileID: 4330255248282845672}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Maze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size:
-    x: 15
-    z: 15
+    x: 20
+    z: 12
   cellPrefab: {fileID: 4475040146595141560, guid: 101807126f6fbee4f8d64071a2f9b9a5,
     type: 3}
   passagePrefab: {fileID: 6029829140343987861, guid: a901e1f7abb604a68ae1a3273ea41cb3,
@@ -60,6 +60,9 @@ MonoBehaviour:
     type: 3}
   mazeRoomPrefab: {fileID: 653585297626500561, guid: 64a90310176b4ab4fb1ebcfe27955899,
     type: 3}
+  numObjectives: 4
+  objectivePrefab: {fileID: 8966107077878855504, guid: b2b5b3ceb62984c4a97c75b638423e8e,
+    type: 3}
   doorProbability: 0.1
   roomSettings:
   - floorMaterial: {fileID: 2100000, guid: e942c59f9d880e546800706ffdaa7fc7, type: 2}
@@ -71,4 +74,4 @@ MonoBehaviour:
   - floorMaterial: {fileID: 2100000, guid: b640223a40f43034ea7019ca18f56ac4, type: 2}
     wallMaterial: {fileID: 2100000, guid: ae4c75fdf90e0e042950a8f3e3ec4627, type: 2}
   rooms: []
-  gm: {fileID: 0}
+  gameManager: {fileID: 0}

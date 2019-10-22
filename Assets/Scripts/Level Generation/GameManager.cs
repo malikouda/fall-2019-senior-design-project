@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
@@ -17,20 +18,29 @@ public class GameManager : MonoBehaviour
 
     public bool generateCeilings = false;
 
+    public bool restart = false;
+
+    public int numObjectives;
+
     void Start() {
         BeginGame();
     }
 
     void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (restart) {
+            RestartGame();
+        }
+        if (numObjectives <= 0) {
             RestartGame();
         }
     }
 
     private void BeginGame() {
+        restart = false;
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
+        numObjectives = mazeInstance.numObjectives;
         Invoke("paths",1);
     }
 
@@ -53,27 +63,6 @@ public class GameManager : MonoBehaviour
     }
 
     private void RestartGame() {
-        Destroy(mazeInstance.gameObject);
-        foreach (Character player in players) {
-            if (player != null) {
-                Destroy(player.gameObject);
-            }
-        }
-        BeginGame();
-    }
-
-    public void SetLayerRecursively(GameObject obj, int newLayer) {
-        if (null == obj) {
-            return;
-        }
-
-        obj.layer = newLayer;
-
-        foreach (Transform child in obj.transform) {
-            if (null == child) {
-                continue;
-            }
-            SetLayerRecursively(child.gameObject, newLayer);
-        }
+        SceneManager.LoadScene(0);
     }
 }

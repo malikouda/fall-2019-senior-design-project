@@ -14,6 +14,8 @@ public class Maze : MonoBehaviour {
     public GameObject ceilingPrefab;
     public GameObject ceilingCellPrefab;
     public GameObject mazeRoomPrefab;
+    public int numObjectives = 4;
+    public GameObject objectivePrefab;
 
     [Range(0f, 1f)]
     public float doorProbability;
@@ -21,11 +23,11 @@ public class Maze : MonoBehaviour {
     public MazeRoomSettings[] roomSettings;
 
     public List<MazeRoom> rooms = new List<MazeRoom>();
-
-    public GameManager gm;
+    [HideInInspector]
+    public GameManager gameManager;
 
     public void Awake() {
-        gm = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     public void Generate() {
@@ -35,13 +37,17 @@ public class Maze : MonoBehaviour {
         while (activeCells.Count > 0) {
             DoNextGenerationStep(activeCells);
         }
+
+        List<MazeRoom> objRooms = new List<MazeRoom>();
+
         for (int i = 0; i < rooms.Count; i++) {
+            objRooms.Add(rooms[i]);
             GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
             rooms[i].roomName = mazeRoom.name;
             rooms[i].parent = mazeRoom;
-            if (gm.generateCeilings) {
+            if (gameManager.generateCeilings) {
                 GameObject ceiling = Instantiate(ceilingPrefab) as GameObject;
                 ceiling.transform.localPosition = mazeRoom.transform.localPosition;
                 ceiling.transform.parent = mazeRoom.transform;
@@ -77,6 +83,18 @@ public class Maze : MonoBehaviour {
                     cell.transform.parent = mazeRoom.transform;
                 }
             }
+        }
+
+        for (int i = 0; i < numObjectives; i++) {
+            Debug.Log(objRooms.Count);
+            int randomRoomIndex = Random.Range(0, objRooms.Count);
+            MazeRoom randomRoom = rooms[randomRoomIndex];
+            int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
+            Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
+            GameObject objective = Instantiate(objectivePrefab) as GameObject;
+            objective.GetComponent<hackerGame>().length = Random.Range(3, 8);
+            objective.transform.position = objPosition * 3;
+            objRooms.Remove(randomRoom);
         }
     }
 
