@@ -1,14 +1,8 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Assets/Scenes/LevelGeneration.meta
-guid: 25e9bb8c8eccc1b4a849a2ce23e95d79
+guid: 1da1bf1b90526134cbc96e56b9dc5d4d
 folderAsset: yes
 DefaultImporter:
-=======
-guid: 16d5a67b1c331e5459dddc0416372562
-NativeFormatImporter:
->>>>>>> ab37fcafead0a7816d6c9e0a443ac149feb3e8e6:Assets/Animation/Guard.controller.meta
   externalObjects: {}
-  mainObjectFileID: 9100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 

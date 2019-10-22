@@ -6,11 +6,18 @@ public class guardMovement : MonoBehaviour {
 
 
     public float threshold;
+    [Tooltip("Minimum amount of time the guard will wait at every waypoint")]
     public float minWaitTime;
+    [Tooltip("Max amount of time the guard will wait at every waypoint")]
     public float MaxWaitTime;
+
+    //state controller
     private EnemyMind mind;
+    //patrol waypoints
     private List<Vector3> patrol;
+    //current patrol destination
     private int index;
+    //the agent on this object
     private NavMeshAgent mAgent;
     private int direction = 1;
     private bool searching;

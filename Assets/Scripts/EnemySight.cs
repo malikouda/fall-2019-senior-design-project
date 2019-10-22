@@ -36,7 +36,6 @@ public class EnemySight : MonoBehaviour
         bool seen = false;
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
         {
-
             Vector3 dir = p.transform.position - transform.position;
             float angle = Vector3.Angle(dir, transform.forward);
             if (angle <= visionThreshold/2)
@@ -44,6 +43,7 @@ public class EnemySight : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, dir.normalized, out hit))
                 {
+                    Debug.Log(hit.collider.gameObject);
                     if( hit.collider.tag == "Player")
                     {
                         hideTime -= Time.deltaTime + 1/Vector3.Distance(transform.position,p.transform.position);

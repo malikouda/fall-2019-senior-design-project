@@ -338,7 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazePrefab: {fileID: 4330255248282845672, guid: 09218179c6fbf76449539b969b89548c,
     type: 3}
-  playerPrefab: {fileID: 7799201882339264958, guid: de6c1de915b24f24e80f5c551859b252,
+  playerPrefab: {fileID: 7253095677746851839, guid: bf05358183221134ca68184c0ed877f8,
     type: 3}
   players:
   - {fileID: 0}
@@ -423,7 +423,7 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
     m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 2864445187837427314, guid: de6c1de915b24f24e80f5c551859b252,
+  m_PlayerPrefab: {fileID: 7253095677746851836, guid: bf05358183221134ca68184c0ed877f8,
     type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
