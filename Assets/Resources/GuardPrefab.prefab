@@ -150,6 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threshold: 0.2
+  alertSpeed: 6
+  catchDistance: 3
   mAgent: {fileID: 0}
 --- !u!195 &6048929208024196713
 NavMeshAgent:
@@ -202,6 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightSprite: {fileID: 21300000, guid: 07468f32c3a3af044afb91217b9297eb, type: 3}
+  SenseDistance: 4
   hideTime: 5
   hideCooldown: 0.5
   drawSight: 0

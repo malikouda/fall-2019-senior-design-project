@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 public class guardMovement : MonoBehaviour {
 
-
+    [Tooltip("How far from the waypoint the guard has to be to move on")]
     public float threshold;
-
-
+    [Tooltip("How fast the guard moves when they are alerted")]
+    public float alertSpeed;
+    public float catchDistance;
     //state controller
     private EnemyMind mind;
+    //the speed the guard normally moves
+    private float normalSpeed;
     //patrol waypoints
     private List<Vector3> patrol;
     //current patrol destination
@@ -24,12 +27,12 @@ public class guardMovement : MonoBehaviour {
     private float currentWaitTime;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         mind = GetComponent<EnemyMind>();
         searchTarget = Vector3.zero;
         mAgent = gameObject.GetComponent<NavMeshAgent>();
-        GameObject current = gameObject;
+        normalSpeed = mAgent.speed;
 
     }
 
@@ -56,8 +59,23 @@ public class guardMovement : MonoBehaviour {
         return mAgent.remainingDistance < threshold;
     }
 
-    public bool hasCaughtPlayer()
+    public bool hasCaughtPlayer(GameObject target)
     {
+        if (Vector3.Distance(transform.position, target.transform.position) < catchDistance)
+        {
+            Vector3 dir = target.transform.position - transform.position;
+            float angle = Vector3.Angle(dir, transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dir.normalized, out hit))
+            {
+
+                Debug.Log(hit.collider.gameObject);
+                if (hit.collider.tag == "Player")
+                {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -70,5 +88,10 @@ public class guardMovement : MonoBehaviour {
     public void goToPosition (Vector3 target)
     {
         mAgent.destination = target;
+    }
+    
+    public void increaseSpeed()
+    {
+        mAgent.speed = alertSpeed;
     }
 }

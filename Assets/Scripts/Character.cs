@@ -179,6 +179,7 @@ public class Character : MonoBehaviour
     public void immobilize ()
     {
         isActivated = false;
+        gameObject.tag = "Untagged";
     }
 
     //These Functions are for the controller, if you need input use the controller class

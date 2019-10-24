@@ -12,7 +12,6 @@ public class EnemyMind : MonoBehaviour
     public float MaxWaitTime;
     public float totalAlertTime;
 
-
     private Character target;
     private guardMovement move;
     public STATES state;
@@ -44,10 +43,11 @@ public class EnemyMind : MonoBehaviour
                 break;
             case STATES.ALERT:
                 move.goToPosition(target.gameObject.transform.position);
-                if (move.isWithinThreshold())
+                if (move.hasCaughtPlayer(target.gameObject))
                 {
-                    Debug.Log("Caught you fucker");
                     target.immobilize();
+                    state = STATES.PATROL;
+                    target = null;
                 }
                 break;
         }
@@ -62,6 +62,7 @@ public class EnemyMind : MonoBehaviour
     //Sets the agent to alert
     public void alert (Character target)
     {
+        move.increaseSpeed();
         state = STATES.ALERT;
         this.target = target;
 
