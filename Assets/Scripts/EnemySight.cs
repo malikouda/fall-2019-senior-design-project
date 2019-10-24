@@ -54,7 +54,7 @@ public class EnemySight : MonoBehaviour
                         }
                         if (hideTime <= 0)
                         {
-                            SceneManager.LoadScene(0);
+                            mind.alert(p.gameObject);
                         }
                     }
 

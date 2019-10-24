@@ -18,7 +18,8 @@ public class guardMovement : MonoBehaviour {
     //current patrol destination
     private int index;
     //the agent on this object
-    private NavMeshAgent mAgent;
+    [HideInInspector]
+    public NavMeshAgent mAgent;
     private int direction = 1;
     private bool searching;
     private Vector3 searchTarget;
@@ -58,8 +59,8 @@ public class guardMovement : MonoBehaviour {
     void Update()
     {
 
-        if (searching)
-        {
+        if (mind.state != EnemyMind.STATES.PATROL)
+        { 
             mAgent.destination = searchTarget;
         }
 
@@ -71,10 +72,9 @@ public class guardMovement : MonoBehaviour {
                 randomWaitTime = Random.Range(minWaitTime, MaxWaitTime);
                 currentWaitTime = 0;
                 index = (index + 1) % patrol.Count;
-                if (searching)
+                if (mind.state == EnemyMind.STATES.INVES)
                 {
                     mind.ChangeState(EnemyMind.STATES.PATROL);
-                    searching = false;
                     mAgent.destination = patrol[index];
                     return;
                 }
@@ -88,7 +88,6 @@ public class guardMovement : MonoBehaviour {
 
     public void investigate(Vector3 target)
     {
-        searching = true;
         searchTarget = target;
     }
 }
