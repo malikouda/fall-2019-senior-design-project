@@ -56,6 +56,11 @@ public class guardMovement : MonoBehaviour {
         return mAgent.remainingDistance < threshold;
     }
 
+    public bool hasCaughtPlayer()
+    {
+        return false;
+    }
+
     public void goToNextPatrol()
     {
         index = (index + 1) % patrol.Count;

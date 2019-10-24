@@ -46,6 +46,7 @@ public class EnemyMind : MonoBehaviour
                 move.goToPosition(target.gameObject.transform.position);
                 if (move.isWithinThreshold())
                 {
+                    Debug.Log("Caught you fucker");
                     target.immobilize();
                 }
                 break;
