@@ -5,11 +5,15 @@ using UnityEngine;
 public class EnemyMind : MonoBehaviour
 {
 
-    public enum STATES {PATROL,INVES,ALERT}
-
+    public enum STATES {PATROL,INVES,ALERT,WAITING}
+    [Tooltip("Minimum amount of time the guard will wait at every waypoint")]
+    public float minWaitTime;
+    [Tooltip("Max amount of time the guard will wait at every waypoint")]
+    public float MaxWaitTime;
     public float totalAlertTime;
 
-    private GameObject target;
+
+    private Character target;
     private guardMovement move;
     public STATES state;
     // Start is called before the first frame update
@@ -25,10 +29,25 @@ public class EnemyMind : MonoBehaviour
         switch (state)
         {
             case STATES.PATROL:
+                if (move.isWithinThreshold())
+                {
+                    state = STATES.WAITING;
+                    Invoke("goToNextPatrol", Random.Range(minWaitTime, MaxWaitTime));
+                }
                 break;
             case STATES.INVES:
+                if (move.isWithinThreshold())
+                {
+                    //TODO: MAKE GUARD ACTUALLY INVESTIGATE
+                    state = STATES.PATROL;
+                }
                 break;
             case STATES.ALERT:
+                move.goToPosition(target.gameObject.transform.position);
+                if (move.isWithinThreshold())
+                {
+                    target.immobilize();
+                }
                 break;
         }
     }
@@ -40,11 +59,18 @@ public class EnemyMind : MonoBehaviour
     }
      
     //Sets the agent to alert
-    public void alert (GameObject target)
+    public void alert (Character target)
     {
         state = STATES.ALERT;
         this.target = target;
 
+    }
+
+    //go to next patrol point
+    private void goToNextPatrol()
+    {
+        state = STATES.PATROL;
+        move.goToNextPatrol();
     }
 
     //returns where the guard should go while pursuing
@@ -59,8 +85,10 @@ public class EnemyMind : MonoBehaviour
             {
                 return target.transform.position;
             }
-            float timeToReach = Vector3.Distance(target.transform.position,transform.position)/relativeSpeed
-        }else
+            float timeToReach = Vector3.Distance(target.transform.position, transform.position) / relativeSpeed; 
+
+        }
+        else
         {
             return target.transform.position;
         }
@@ -71,6 +99,7 @@ public class EnemyMind : MonoBehaviour
     //has the agent investigate a given position
     public void Investigate(Vector3 position)
     {
-        move.investigate(position);
+        state = STATES.INVES;
+        move.goToPosition(position);
     }
 }

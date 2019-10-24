@@ -44,18 +44,19 @@ public class EnemySight : MonoBehaviour
                 if (Physics.Raycast(transform.position, dir.normalized, out hit))
                 {
                     Debug.Log(hit.collider.gameObject);
-                    if( hit.collider.tag == "Player")
+                    if(hit.collider.tag == "Player")
                     {
                         hideTime -= Time.deltaTime + 1/Vector3.Distance(transform.position,p.transform.position);
 
+                        if (hideTime <= 0)
+                        {
+                            mind.alert(p.gameObject.GetComponent<Character>());
+                        }
                         if (hideTime >= hideTimeMax/2)
                         {
                             mind.Investigate(p.gameObject.transform.position); 
                         }
-                        if (hideTime <= 0)
-                        {
-                            mind.alert(p.gameObject);
-                        }
+
                     }
 
                 }

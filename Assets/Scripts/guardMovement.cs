@@ -6,10 +6,7 @@ public class guardMovement : MonoBehaviour {
 
 
     public float threshold;
-    [Tooltip("Minimum amount of time the guard will wait at every waypoint")]
-    public float minWaitTime;
-    [Tooltip("Max amount of time the guard will wait at every waypoint")]
-    public float MaxWaitTime;
+
 
     //state controller
     private EnemyMind mind;
@@ -29,17 +26,15 @@ public class guardMovement : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        randomWaitTime = Random.Range(minWaitTime, MaxWaitTime);
-        currentWaitTime = 0;
         mind = GetComponent<EnemyMind>();
         searchTarget = Vector3.zero;
         mAgent = gameObject.GetComponent<NavMeshAgent>();
         GameObject current = gameObject;
+
     }
 
     public void assignPatrol(List<Vector3> newPatrol)
     {
-        patrol = new List<Vector3>();
         patrol = newPatrol;
     }
 
@@ -55,39 +50,20 @@ public class guardMovement : MonoBehaviour {
             last = next;
         }
     }
-    // Update is called once per frame
-    void Update()
+
+    public bool isWithinThreshold()
     {
-
-        if (mind.state != EnemyMind.STATES.PATROL)
-        { 
-            mAgent.destination = searchTarget;
-        }
-
-        if (mAgent.remainingDistance < threshold) 
-        {
-            currentWaitTime += Time.deltaTime;
-            if (currentWaitTime > randomWaitTime)
-            {
-                randomWaitTime = Random.Range(minWaitTime, MaxWaitTime);
-                currentWaitTime = 0;
-                index = (index + 1) % patrol.Count;
-                if (mind.state == EnemyMind.STATES.INVES)
-                {
-                    mind.ChangeState(EnemyMind.STATES.PATROL);
-                    mAgent.destination = patrol[index];
-                    return;
-                }
-                Debug.Log(index);
-
-                mAgent.destination = patrol[index];
-            }
-        }
-
+        return mAgent.remainingDistance < threshold;
     }
 
-    public void investigate(Vector3 target)
+    public void goToNextPatrol()
     {
-        searchTarget = target;
+        index = (index + 1) % patrol.Count;
+        mAgent.destination = patrol[index];
+    }
+     
+    public void goToPosition (Vector3 target)
+    {
+        mAgent.destination = target;
     }
 }

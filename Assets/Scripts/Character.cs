@@ -11,7 +11,8 @@ public class Character : MonoBehaviour
     public MazeRoom currentRoom;
     [HideInInspector]
     public GameManager gameManager;
-
+    [HideInInspector]
+    public bool isActivated;
 
     Rigidbody rb;
     Vector3 moveDirection;
@@ -19,24 +20,16 @@ public class Character : MonoBehaviour
     bool touching = false;
     GameObject interactable;
     Vector2 move;
-    minigame currntGame;
+    minigame currentGame;
     controllerInput controller;
     MazeCell currentCell;
 
     PlayerControls controls;
 
-    public void SetLocation(MazeCell cell)
-    {
-        currentCell = cell;
-        transform.localPosition = new Vector3(cell.transform.localPosition.x * 3f, 0.5f, cell.transform.localPosition.z * 3f);
-    }
     class controllerInput
     {
         public Vector2 move;
-        public bool x;
-        public bool y;
-        public bool a;
-        public bool b;
+        public bool x , y, a, b;
         public void resetinput()
         {
             move = Vector2.zero;
@@ -46,6 +39,12 @@ public class Character : MonoBehaviour
             b = false;
         }
 
+    }
+
+    public void SetLocation(MazeCell cell)
+    {
+        currentCell = cell;
+        transform.localPosition = new Vector3(cell.transform.localPosition.x * 3f, 0.5f, cell.transform.localPosition.z * 3f);
     }
 
     private void Awake()
@@ -64,11 +63,24 @@ public class Character : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
         gameManager.Spawn(this);
+        isActivated = true;
     }
 
     private void Update()
     {
-        
+        if (!isActivated)
+        {
+            foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
+            {
+                if (Vector3.Distance(transform.position,p.transform.position) < .01f)
+                {
+                    isActivated = true;
+                    break;
+                }
+            }
+            return;
+        }
+
         Vector2 m = move * Time.deltaTime;
         Vector3 combinedInput = new Vector3(m.x, 0, m.y);
 
@@ -83,39 +95,38 @@ public class Character : MonoBehaviour
         if (controller.x)
         {
             Debug.Log("X");
-            if (currntGame != null)
+            if (currentGame != null)
             {
-                currntGame.playerInput((int)BUTTONS.X);
+                currentGame.playerInput((int)BUTTONS.X);
             }
         }
 
         if (controller.y)
         {
             Debug.Log("y");
-            if (currntGame != null)
+            if (currentGame != null)
             {
-                currntGame.playerInput((int)BUTTONS.Y);
+                currentGame.playerInput((int)BUTTONS.Y);
             }
         }
 
         if (controller.a)
         {
-            if (currntGame != null)
+            if (currentGame != null)
             {
-                currntGame.playerInput((int)BUTTONS.A);
+                currentGame.playerInput((int)BUTTONS.A);
             }
         }
 
         if (controller.b)
         {
-            if (currntGame != null)
+            if (currentGame != null)
             {
-                currntGame.playerInput((int)BUTTONS.B);
+                currentGame.playerInput((int)BUTTONS.B);
             }
         }
 
         controller.resetinput();
-        return;
     }
 
     private void FixedUpdate() {
@@ -132,8 +143,8 @@ public class Character : MonoBehaviour
         else if (other.tag == "minigame")
         {
             Debug.Log("enter game");
-            currntGame = other.gameObject.GetComponent<minigame>();
-            currntGame.startGame();
+            currentGame = other.gameObject.GetComponent<minigame>();
+            currentGame.startGame();
         }
     }
 
@@ -141,7 +152,7 @@ public class Character : MonoBehaviour
     {
         if (other.tag == "minigame")
         {
-            currntGame = null;
+            currentGame = null;
         }
         else if (other.tag == "roomChange" && gameManager.generateCeilings) {
             MazeRoom otherRoom = other.gameObject.GetComponentInParent<MazeCell>().room;
@@ -163,6 +174,14 @@ public class Character : MonoBehaviour
             }
         }
     }
+
+    //the player can't move or interact with the world until another player unties them
+    public void immobilize ()
+    {
+        isActivated = false;
+    }
+
+    //These Functions are for the controller, if you need input use the controller class
 
     public void OnX()
     {
