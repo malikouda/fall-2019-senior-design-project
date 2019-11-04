@@ -93,5 +93,13 @@ public class guardMovement : MonoBehaviour {
     public void increaseSpeed()
     {
         mAgent.speed = alertSpeed;
+        mAgent.autoBraking = false;
+    }
+
+    public void resetSpeed()
+    {
+        mAgent.speed = normalSpeed;
+        mAgent.autoBraking = true;
+
     }
 }

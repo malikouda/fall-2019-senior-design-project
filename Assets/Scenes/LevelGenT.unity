@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -275,9 +275,9 @@ GameObject:
   m_Component:
   - component: {fileID: 934843956}
   - component: {fileID: 934843955}
-  - component: {fileID: 934843957}
   - component: {fileID: 934843958}
   - component: {fileID: 934843959}
+  - component: {fileID: 934843957}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameController
@@ -292,7 +292,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934843954}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ada163f4946a7a4eaa4de067b24a58a, type: 3}
   m_Name: 
@@ -331,15 +331,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934843954}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1909e6d07ed6e5b41921e06814118cc3, type: 3}
+  m_Script: {fileID: 11500000, guid: 61b9b827a8ad21249875262bd1c78410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xGrid: 10
-  zGrid: 10
-  GridSize: 1
+  xGrid: 11
+  zGrid: 9
+  GridSize: 4
   drawGrid: 0
+  debugText: {fileID: 0}
+  roomPrefabs:
+  - prefab: {fileID: 748844564904504109, guid: 5417c2b986269dd479b6fee75b3fec27, type: 3}
+    xLen: 4
+    zLen: 4
+  - prefab: {fileID: 1010697307861051507, guid: c7c50545d760db84fb1312503626e2c8,
+      type: 3}
+    xLen: 3
+    zLen: 3
+  - prefab: {fileID: 3254367781074748133, guid: 41cb93bff48d14742a0c75ed8a5a46b3,
+      type: 3}
+    xLen: 2
+    zLen: 2
+  oneByOnePrefab: {fileID: 8995191783208297958, guid: 6ae5b52107825504b855708fa19a2dae,
+    type: 3}
 --- !u!114 &934843958
 MonoBehaviour:
   m_ObjectHideFlags: 0
