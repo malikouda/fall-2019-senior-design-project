@@ -12,6 +12,8 @@ TagManager:
   - mazeWall
   - mazeDoor
   - ceiling
+  - minigame
+  - playerInput
   layers:
   - Default
   - TransparentFX

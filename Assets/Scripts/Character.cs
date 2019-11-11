@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public bool isActivated;
 
+
+    private RawPlayerInput.controllerInput inputDevice;
     private Rigidbody rb;
     private Vector3 moveDirection;
     private float inputAmount;
@@ -23,25 +24,12 @@ public class Character : MonoBehaviour
     private GameObject interactable;
     private Vector2 move;
     private minigame currentGame;
-    private controllerInput controller;
+
     private MazeCell currentCell;
     private List<Character> players;
-    private PlayerControls controls;
 
-    class controllerInput
-    {
-        public Vector2 move;
-        public bool x , y, a, b;
-        public void resetinput()
-        {
-            move = Vector2.zero;
-            x = false;
-            y = false;
-            a = false;
-            b = false;
-        }
 
-    }
+
 
     public void SetLocation(MazeCell cell)
     {
@@ -49,22 +37,9 @@ public class Character : MonoBehaviour
         transform.localPosition = new Vector3(cell.transform.localPosition.x * 3f, 0.5f, cell.transform.localPosition.z * 3f);
     }
 
-    private void Awake()
-    {
-        controller = new controllerInput();
-
-        controls = new PlayerControls();
-        controls.devices = GetComponent<PlayerInput>().user.pairedDevices;
-        controls.Gameplay.move.performed += ctx => move = ctx.ReadValue<Vector2>();
-        controls.Gameplay.move.canceled += ctx => move = Vector2.zero;
-        controller = new controllerInput();
-        controls.Enable();
-    }
-
     private void Start() {
         rb = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
-        gameManager.Spawn(this);
         isActivated = true;
         players = new List<Character>();
         foreach (GameObject g in GameObject.FindGameObjectsWithTag("Player"))
@@ -92,7 +67,7 @@ public class Character : MonoBehaviour
             return;
         }
 
-        Vector2 m = move * Time.deltaTime;
+        Vector2 m = inputDevice.move * Time.deltaTime;
         Vector3 combinedInput = new Vector3(m.x, 0, m.y);
 
         moveDirection = new Vector3(combinedInput.normalized.x, 0, combinedInput.normalized.z);
@@ -103,25 +78,25 @@ public class Character : MonoBehaviour
             transform.rotation = targetRotation;
         }
 
-        if (controller.x)
+        
+
+        if (inputDevice.x)
         {
-            Debug.Log("X");
             if (currentGame != null)
             {
                 currentGame.playerInput((int)BUTTONS.X);
             }
         }
 
-        if (controller.y)
+        if (inputDevice.y)
         {
-            Debug.Log("y");
             if (currentGame != null)
             {
                 currentGame.playerInput((int)BUTTONS.Y);
             }
         }
 
-        if (controller.a)
+        if (inputDevice.a)
         {
             if (currentGame != null)
             {
@@ -129,15 +104,13 @@ public class Character : MonoBehaviour
             }
         }
 
-        if (controller.b)
+        if (inputDevice.b)
         {
             if (currentGame != null)
             {
                 currentGame.playerInput((int)BUTTONS.B);
             }
         }
-
-        controller.resetinput();
     }
 
     private void FixedUpdate() {
@@ -195,28 +168,33 @@ public class Character : MonoBehaviour
         isActivated = false;
     }
 
-    //These Functions are for the controller, if you need input use the controller class
-
-    public void OnX()
+    public void assignController(RawPlayerInput input)
     {
-        controller.x = true;
+        inputDevice = input.controller;
+        switch (input.playerId)
+        {
+            case PLAYERID.BLUE:
+                {
+                    GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
+                    break;
+                }
+            case PLAYERID.RED:
+                {
+                    GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+                    break;
+                }
+            case PLAYERID.GREEN:
+                {
+                    GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+                    break;
+                }
+            case PLAYERID.YELLOW:
+                {
+                    GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+                    break;
+                }
+        }
     }
-
-    public void OnY()
-    {
-        controller.y = true;
-    }
-
-    public void OnB()
-    {
-        controller.b = true;
-    }
-
-    public void OnA()
-    {
-        controller.a = true;
-    }
-
 
 
 }

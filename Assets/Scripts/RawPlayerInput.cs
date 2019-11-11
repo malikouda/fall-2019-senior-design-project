@@ -1,22 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 public class RawPlayerInput : MonoBehaviour
 {
+    public class controllerInput
+    {
+        public Vector2 move;
+        public bool x, y, a, b,start;
+        public void resetinput()
+        {
+            x = false;
+            y = false;
+            a = false;
+            b = false;
+            start = false;
+        }
+
+    }
+
     //The unique color related to this player
     public PLAYERID playerId;
 
-    //The character associated with this player
-    private Character ControlledPlayer;
-    //Has a player been assigned yet?
-    private bool playerAssigned;
+    public controllerInput controller;
+    private PlayerControls controls;
+    private PlayerInput inputComp;
+    Vector2 move;
+    public void Awake()
+    {
+        controller = new controllerInput();
+        controls = new PlayerControls();
+        controls.devices = GetComponent<PlayerInput>().user.pairedDevices;
+        controls.Gameplay.move.performed += ctx => controller.move = ctx.ReadValue<Vector2>();
+        controls.Gameplay.move.canceled += ctx => controller.move = Vector2.zero;
+        controls.Enable();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         //Make this player persistant
         DontDestroyOnLoad(gameObject);
+
+
+  
     }
 
     //Assign a color to the player
@@ -25,37 +53,45 @@ public class RawPlayerInput : MonoBehaviour
         playerId = newID;
     }
 
-    //Assign a character to this player
-    public void assignPlayer(Character character)
+    //Assign control over the menu
+    public void assignMenuControls(InputSystemUIInputModule module)
     {
-        ControlledPlayer = character;
-        playerAssigned = true;
+        GetComponent<PlayerInput>().uiInputModule = module;
     }
 
-
+    public void LateUpdate()
+    {
+        controller.resetinput();
+    }
 
     //BELOW: Called from player input component 
     public void OnX()
     {
-        if (playerAssigned)
-            ControlledPlayer.OnX();
+        Debug.Log("X");
+        controller.x = true;
     }
 
     public void OnY()
     {
-        if(playerAssigned)
-            ControlledPlayer.OnY();
-    }
-
-    public void OnB()
-    {
-        if(playerAssigned)
-            ControlledPlayer.OnB();
+        Debug.Log("Y");
+        controller.y = true;
     }
 
     public void OnA()
     {
-        if(playerAssigned)
-            ControlledPlayer.OnA();
+        Debug.Log("A");
+        controller.a = true;
     }
+
+    public void OnB()
+    {
+        Debug.Log("B");
+        controller.b = true;
+    }
+
+    public void OnStart()
+    {
+        controller.start = true;
+    }
+
 }

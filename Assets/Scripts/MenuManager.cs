@@ -3,21 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    private List<PLAYERID> usedIDs;
+    public GameObject[] playerIcons;
 
+    private List<PLAYERID> usedIDs;
+    private InputSystemUIInputModule inputModule;
+    private PlayerInputManager manager;
+    private List<RawPlayerInput> players;
+    private bool joiningPlayers;
+    
     // Start is called before the first frame update
     void Start()
     {
+        manager = FindObjectOfType<PlayerInputManager>();
         usedIDs = new List<PLAYERID>();
+        inputModule = FindObjectOfType<InputSystemUIInputModule>();
+        players = new List<RawPlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (joiningPlayers)
+        {
+            foreach (RawPlayerInput p in players)
+            {
+                if (p.controller.start)
+                {
+                    startGame();
+                }
+                if (p.controller.b)
+                {
+                    toMain();
+                }
+            }
+        }
     }
 
     //Assign a player input their unique color on creation
@@ -58,6 +82,26 @@ public class MenuManager : MonoBehaviour
         Application.Quit();
     }
 
+    //Go to the character selection screen
+    public void toCharacterSelect()
+    {
+        joiningPlayers = true;
+        manager.EnableJoining();
+        inputModule.DisableAllActions();
+    }
+
+    public void toMain()
+    {
+        joiningPlayers = false;
+        manager.DisableJoining();
+        inputModule.EnableAllActions();
+    }
+
+    public void startGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     public void test(string message)
     {
         Debug.Log(message);
@@ -65,7 +109,31 @@ public class MenuManager : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput p)
     {
-        Debug.Log("Yes");
-        assignID(p.gameObject.GetComponent<RawPlayerInput>());
+        RawPlayerInput playerInput = p.gameObject.GetComponent<RawPlayerInput>();
+        players.Add(playerInput);
+        assignID(playerInput);
+        foreach(RawPlayerInput player in players)
+        {
+            switch (player.playerId)
+            {
+                case PLAYERID.BLUE:
+                    playerIcons[0].SetActive(true);
+                    break;
+                case PLAYERID.RED:
+                    playerIcons[1].SetActive(true);
+                    break;
+                case PLAYERID.GREEN:
+                    playerIcons[2].SetActive(true);
+                    break;
+                case PLAYERID.YELLOW:
+                    playerIcons[3].SetActive(true);
+                    break;
+            }
+        
+                
+        }
+        //playerInput.assignMenuControls(inputModule);
+
+
     }
 }

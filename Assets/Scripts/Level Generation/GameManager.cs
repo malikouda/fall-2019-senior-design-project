@@ -41,6 +41,13 @@ public class GameManager : MonoBehaviour
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
         numObjectives = mazeInstance.numObjectives;
+        foreach(RawPlayerInput p in GameObject.FindObjectsOfType<RawPlayerInput>())
+        {
+            GameObject playerOBJ = Instantiate(playerPrefab.gameObject);
+            Character player = playerOBJ.GetComponent<Character>();
+            player.assignController(p);
+            Spawn(player);
+        }
         Invoke("paths",1);
     }
 
@@ -73,7 +80,7 @@ public class GameManager : MonoBehaviour
         if (numPlayers <= 0)
         {
             //This is where the game over screen goes
-            Debug.Log("Game Over");
+            SceneManager.LoadScene(0);
         }
     }
 
