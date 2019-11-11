@@ -63,18 +63,8 @@ public class guardMovement : MonoBehaviour {
     {
         if (Vector3.Distance(transform.position, target.transform.position) < catchDistance)
         {
-            Vector3 dir = target.transform.position - transform.position;
-            float angle = Vector3.Angle(dir, transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, dir.normalized, out hit))
-            {
-
-                Debug.Log(hit.collider.gameObject);
-                if (hit.collider.tag == "Player")
-                {
-                    return true;
-                }
-            }
+            decreaseSpeed();
+            return true;
         }
         return false;
     }
@@ -94,6 +84,12 @@ public class guardMovement : MonoBehaviour {
     {
         mAgent.speed = alertSpeed;
         mAgent.autoBraking = false;
+    }
+
+    public void decreaseSpeed()
+    {
+        mAgent.speed = normalSpeed;
+        mAgent.autoBraking = true;
     }
 
     public void resetSpeed()

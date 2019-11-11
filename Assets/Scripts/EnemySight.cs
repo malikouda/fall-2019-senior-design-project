@@ -22,12 +22,20 @@ public class EnemySight : MonoBehaviour
     private Image sightImage;
     private EnemyMind mind;
     private float hideTimeMax;
+    private List<Character> players;
     // Start is called before the first frame update
     void Start()
     {
         mind = GetComponent<EnemyMind>();
         sightImage = GetComponentInChildren<Image>();
         hideTimeMax = hideTime;
+        players = new List<Character>();
+        foreach(GameObject g in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            Character c = g.GetComponent<Character>();
+            if (c != null)
+                players.Add(c);
+        }
     }
 
     // Update is called once per frame
@@ -38,27 +46,34 @@ public class EnemySight : MonoBehaviour
         {
             //check to see if the player is in the enemies line of sight
             bool seen = false;
-            foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
+            foreach (Character p in players)
             {
+                //If the player is caught, no need to check them
+                if (!p.isActivated)
+                    continue;
+                //if the player is within the cone of vision or they are too close to the guard, they can be seen
                 Vector3 dir = p.transform.position - transform.position;
                 float angle = Vector3.Angle(dir, transform.forward);
-                //if the player is within the cone of vision or they are too close to the guard, they can be seen
-                if (angle <= visionThreshold/2 || Vector3.Distance(p.gameObject.transform.position, transform.position) < SenseDistance)
+                float distance = Vector3.Distance(p.gameObject.transform.position, transform.position);
+                if (angle <= visionThreshold/2 || distance < SenseDistance)
                 {
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, dir.normalized, out hit))
                     { 
                         if(hit.collider.tag == "Player")
                         {
-                            hideTime -= Time.deltaTime + 1/Vector3.Distance(transform.position,p.transform.position);
+                            hideTime -= Time.deltaTime + 1/distance;
 
+                            //If the player has been spotted too much
                             if (hideTime <= 0)
                             {
-                                mind.alert(p.gameObject.GetComponent<Character>());
+                                //Alert the guard
+                                mind.alert(p);
                                 hideTime = hideTimeMax;
                             }
-                            if (hideTime >= hideTimeMax/2)
+                            if (hideTime <= hideTimeMax/2)
                             {
+                                //Or investigate if not fully caught
                                 mind.Investigate(p.gameObject.transform.position); 
                             }
 
@@ -89,9 +104,8 @@ public class EnemySight : MonoBehaviour
     {
         if(drawSight)
         {
-            Debug.DrawRay(transform.position, new Vector3 (transform.forward.x - visionThreshold, transform.forward.y,transform.forward.z) * distance, Color.red);
-            Debug.DrawRay(transform.position, new Vector3(transform.forward.x + visionThreshold, transform.forward.y, transform.forward.z) * distance, Color.red);
-
+            Gizmos.DrawRay(transform.position, new Vector3 (transform.forward.x - visionThreshold, transform.forward.y,transform.forward.z) * distance);
+            Gizmos.DrawRay(transform.position, new Vector3(transform.forward.x + visionThreshold, transform.forward.y, transform.forward.z) * distance);
             Gizmos.DrawWireSphere(transform.position, SenseDistance);
 
         }

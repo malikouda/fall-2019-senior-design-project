@@ -92,7 +92,7 @@ public class BOHGeneration : MonoBehaviour
             }
             newID++;
         }
-        return;
+        
         //make doorways
         for (int x = 0; x <= xGrid; x++)
         {

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
@@ -14,17 +16,17 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public bool isActivated;
 
-    Rigidbody rb;
-    Vector3 moveDirection;
-    float inputAmount;
-    bool touching = false;
-    GameObject interactable;
-    Vector2 move;
-    minigame currentGame;
-    controllerInput controller;
-    MazeCell currentCell;
-
-    PlayerControls controls;
+    private Rigidbody rb;
+    private Vector3 moveDirection;
+    private float inputAmount;
+    private bool touching = false;
+    private GameObject interactable;
+    private Vector2 move;
+    private minigame currentGame;
+    private controllerInput controller;
+    private MazeCell currentCell;
+    private List<Character> players;
+    private PlayerControls controls;
 
     class controllerInput
     {
@@ -64,17 +66,26 @@ public class Character : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
         gameManager.Spawn(this);
         isActivated = true;
+        players = new List<Character>();
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            Character c = g.GetComponent<Character>();
+            if (c != null)
+                players.Add(c);
+        }
     }
 
     private void Update()
     {
         if (!isActivated)
         {
-            foreach (GameObject p in GameObject.FindGameObjectsWithTag("Player"))
+            rb.velocity = Vector3.zero;
+            foreach (Character p in players)
             {
-                if (Vector3.Distance(transform.position,p.transform.position) < .01f)
+                if (p.isActivated && Vector3.Distance(transform.position,p.transform.position) < .01f)
                 {
                     isActivated = true;
+                    tag = "Player";
                     break;
                 }
             }
@@ -130,7 +141,8 @@ public class Character : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        rb.velocity = (moveDirection * moveSpeed);
+        if (isActivated)
+            rb.velocity = (moveDirection * moveSpeed);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -178,8 +190,9 @@ public class Character : MonoBehaviour
     //the player can't move or interact with the world until another player unties them
     public void immobilize ()
     {
+        rb.velocity = Vector3.zero;
+
         isActivated = false;
-        gameObject.tag = "Untagged";
     }
 
     //These Functions are for the controller, if you need input use the controller class

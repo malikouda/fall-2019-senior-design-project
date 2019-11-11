@@ -45,6 +45,7 @@ public class EnemyMind : MonoBehaviour
                 move.goToPosition(target.gameObject.transform.position);
                 if (move.hasCaughtPlayer(target.gameObject))
                 {
+                    GameManager.instance.catchPlayer();
                     target.immobilize();
                     state = STATES.PATROL;
                     target = null;
@@ -71,6 +72,10 @@ public class EnemyMind : MonoBehaviour
     //go to next patrol point
     private void goToNextPatrol()
     {
+        Debug.Log("Go to next Patrol");
+        //State has changed since waiting, do not go back to patrolling
+        if (state != STATES.WAITING)
+            return;
         state = STATES.PATROL;
         move.goToNextPatrol();
     }
