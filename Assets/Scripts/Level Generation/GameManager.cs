@@ -4,39 +4,33 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-
-    public Maze mazePrefab;
-
-    private Maze mazeInstance;
-
-    public Character playerPrefab;
-
     public static GameManager instance;
 
+    public Maze mazePrefab;
+    public Character playerPrefab;
     [HideInInspector]
     public List<Character> players = new List<Character>();
     [HideInInspector]
     public List<MazeRoom> activeRooms = new List<MazeRoom>();
-
     public bool generateCeilings = false;
-
     public bool restart = false;
-
     public int numObjectives;
 
     private int numPlayers;
+    private Maze mazeInstance;
 
-    void Start() {
-        BeginGame();
+    private void Awake()
+    {
         if (instance == null)
             instance = this;
     }
 
+    void Start() {
+        BeginGame();
+    }
+
     void Update() {
         if (restart) {
-            RestartGame();
-        }
-        if (numObjectives <= 0) {
             RestartGame();
         }
     }
@@ -86,5 +80,10 @@ public class GameManager : MonoBehaviour
     public void releasePlayer()
     {
         ++numPlayers;
+    }
+
+    public void completedMinigame()
+    {
+        --numObjectives;
     }
 }

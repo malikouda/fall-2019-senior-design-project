@@ -307,7 +307,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   activeRooms: []
-  generateCeilings: 0
+  generateCeilings: 1
   restart: 0
   numObjectives: 0
 --- !u!4 &934843956

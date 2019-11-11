@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class hackerGame : MonoBehaviour, minigame
 {
-    public enum BUTTONS { X, Y, A, B };
 
     public int length;
     private List<int> pattern;
@@ -13,13 +12,11 @@ public class hackerGame : MonoBehaviour, minigame
     private Text playText;
     private Animator anim;
 
-    public GameManager gameManager;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         playText = GetComponentInChildren<Text>();
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     public void displayNext(int next)
@@ -71,10 +68,8 @@ public class hackerGame : MonoBehaviour, minigame
             correctInput++;
             if (correctInput > length)
             {
-                Debug.Log("WIN");
-                correctInput = 0;
-                Destroy(gameObject);
-                gameManager.numObjectives--;
+                complete();
+
             }
 
             displayNext(pattern[correctInput]);
@@ -86,5 +81,13 @@ public class hackerGame : MonoBehaviour, minigame
             displayNext(pattern[correctInput]);
             anim.SetTrigger("fail");
         }
+    }
+
+    public void complete()
+    {
+        correctInput = 0;
+        GameManager.instance.completedMinigame();
+        Destroy(gameObject);
+
     }
 }

@@ -63,6 +63,8 @@ MonoBehaviour:
   numObjectives: 4
   objectivePrefab: {fileID: 8966107077878855504, guid: b2b5b3ceb62984c4a97c75b638423e8e,
     type: 3}
+  finalObjectivePrefab: {fileID: 5884598195823200151, guid: cc1e66d6d53c77c4cb38043ac7291972,
+    type: 3}
   doorProbability: 0.1
   roomSettings:
   - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}

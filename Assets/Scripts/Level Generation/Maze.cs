@@ -16,7 +16,7 @@ public class Maze : MonoBehaviour {
     public GameObject mazeRoomPrefab;
     public int numObjectives = 4;
     public GameObject objectivePrefab;
-
+    public GameObject finalObjectivePrefab;
     [Range(0f, 1f)]
     public float doorProbability;
 
@@ -26,8 +26,15 @@ public class Maze : MonoBehaviour {
     [HideInInspector]
     public GameManager gameManager;
 
-    public void Awake() {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
+    public void Awake()
+    {
+        gameManager = GameObject.FindObjectOfType<GameManager>();
+
+    }
+
+    public void Start()
+    {
     }
 
     public void Generate() {
@@ -85,17 +92,24 @@ public class Maze : MonoBehaviour {
             }
         }
 
+        //Spawn the objectives
+        spawnObjective(finalObjectivePrefab, objRooms);
         for (int i = 0; i < numObjectives; i++) {
-            Debug.Log(objRooms.Count);
-            int randomRoomIndex = Random.Range(0, objRooms.Count);
-            MazeRoom randomRoom = rooms[randomRoomIndex];
-            int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
-            Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
-            GameObject objective = Instantiate(objectivePrefab) as GameObject;
-            objective.GetComponent<hackerGame>().length = Random.Range(3, 8);
-            objective.transform.position = objPosition * 3;
-            objRooms.Remove(randomRoom);
+            spawnObjective(objectivePrefab, objRooms);
         }
+    }
+
+    private void spawnObjective(GameObject objectivePrefabInst, List<MazeRoom> objRooms)
+    {
+        Debug.Log(objRooms.Count);
+        int randomRoomIndex = Random.Range(0, objRooms.Count);
+        MazeRoom randomRoom = rooms[randomRoomIndex];
+        int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
+        Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
+        GameObject objective = Instantiate(objectivePrefabInst) as GameObject;
+        //objective.GetComponent<hackerGame>().length = Random.Range(3, 8);
+        objective.transform.position = objPosition * 3;
+        objRooms.Remove(randomRoom);
     }
 
     private MazeCell CreateCell(IntVector2 coordinates) {

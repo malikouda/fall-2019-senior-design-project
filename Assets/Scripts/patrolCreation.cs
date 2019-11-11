@@ -155,7 +155,7 @@ public class patrolCreation : MonoBehaviour
         }
         agent = GetComponent<NavMeshAgent>();
     }
-
+    
     //called from Gamemanager after Maze Creation
     public static void createPatrols()
     {
