@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b257829030534b77a7fcffecd7cf901
+guid: c1acb248276e4467fb52f0fee823ff64
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
@@ -10,8 +10,9 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: blinn5
-    second: {fileID: 2100000, guid: 1e1c6a0a64beb49ec96272beefa468a5, type: 2}
+      name: HeadColor
+    second: {fileID: 6271573414225017425, guid: ef5534a09d3684cd7bd1dc69c28a7da7,
+      type: 3}
   materials:
     importMaterials: 1
     materialName: 0

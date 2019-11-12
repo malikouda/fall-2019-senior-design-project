@@ -10,19 +10,9 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: blinn3
-    second: {fileID: 1108147716743453759, guid: b517e5c43caab42658edac247b1cf378,
+      name: HeadColor
+    second: {fileID: -1294284738371021749, guid: d7379ec5694044c3fb66259d0fe3efdf,
       type: 3}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn5
-    second: {fileID: 2100000, guid: d76a7e91ca08944b48a192c588d7ec60, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: blinn6
-    second: {fileID: 2100000, guid: c886b8a86a94f69428aa5d492b756552, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
