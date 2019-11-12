@@ -1,12 +1,19 @@
 fileFormatVersion: 2
-guid: b517e5c43caab42658edac247b1cf378
+guid: 16c88c923115c45eea4e055cc672e0ec
 ModelImporter:
   serializedVersion: 26
-  internalIDToNameTable:
+  internalIDToNameTable: []
+  externalObjects:
   - first:
-      74: 1827226128182048838
-    second: Take 001
-  externalObjects: {}
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn1
+    second: {fileID: 2100000, guid: 170fcae999ff248408461959b22f1427, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: blinn2
+    second: {fileID: 2100000, guid: 9430dbc04ca374ce6ab1bdbe25d597f1, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -90,7 +97,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
