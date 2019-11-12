@@ -309,6 +309,7 @@ MonoBehaviour:
   - {fileID: 1464791317}
   - {fileID: 710215551}
   - {fileID: 1670242208}
+  levelIndex: 1
 --- !u!4 &228478045
 Transform:
   m_ObjectHideFlags: 0

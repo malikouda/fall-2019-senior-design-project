@@ -14,7 +14,7 @@ public class Maze : MonoBehaviour {
     public GameObject ceilingPrefab;
     public GameObject ceilingCellPrefab;
     public GameObject mazeRoomPrefab;
-    public int numObjectives = 4;
+    public int numObjectives;
     public GameObject objectivePrefab;
     public GameObject finalObjectivePrefab;
     [Range(0f, 1f)]
@@ -33,10 +33,6 @@ public class Maze : MonoBehaviour {
 
     }
 
-    public void Start()
-    {
-    }
-
     public void Generate() {
         cells = new MazeCell[size.x, size.z];
         List<MazeCell> activeCells = new List<MazeCell>();
@@ -48,7 +44,11 @@ public class Maze : MonoBehaviour {
         List<MazeRoom> objRooms = new List<MazeRoom>();
 
         for (int i = 0; i < rooms.Count; i++) {
-            objRooms.Add(rooms[i]);
+            if (rooms[i].size > 1) {
+                if (RoomHasValidPlacement(rooms[i])) {
+                    objRooms.Add(rooms[i]);
+                }
+            }
             GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
@@ -94,6 +94,7 @@ public class Maze : MonoBehaviour {
 
         //Spawn the objectives
         spawnObjective(finalObjectivePrefab, objRooms);
+        numObjectives = gameManager.numObjectives;
         for (int i = 0; i < numObjectives; i++) {
             spawnObjective(objectivePrefab, objRooms);
         }
@@ -101,15 +102,43 @@ public class Maze : MonoBehaviour {
 
     private void spawnObjective(GameObject objectivePrefabInst, List<MazeRoom> objRooms)
     {
-        Debug.Log(objRooms.Count);
         int randomRoomIndex = Random.Range(0, objRooms.Count);
-        MazeRoom randomRoom = rooms[randomRoomIndex];
+        MazeRoom randomRoom = objRooms[randomRoomIndex];
         int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
+        MazeCell randomCell = randomRoom.cells[randomCellIndex];
+        while (CellNextToDoor(randomCell)) {
+            randomCellIndex = Random.Range(0, randomRoom.cells.Count);
+            randomCell = randomRoom.cells[randomCellIndex];
+        }
         Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
         GameObject objective = Instantiate(objectivePrefabInst) as GameObject;
-        //objective.GetComponent<hackerGame>().length = Random.Range(3, 8);
         objective.transform.position = objPosition * 3;
         objRooms.Remove(randomRoom);
+    }
+
+    private bool CellNextToDoor(MazeCell cell) {
+        bool nextToDoor = false;
+        MazeDirection[] directions = new MazeDirection[4] { MazeDirection.North, MazeDirection.East, MazeDirection.South, MazeDirection.West };
+        for (int i = 0; i < 4; i++) {
+            if (cell.GetEdge(directions[i]) is MazeDoor) {
+                nextToDoor = true;
+                break;
+            }
+        }
+        return nextToDoor;
+    }
+
+    private bool RoomHasValidPlacement(MazeRoom room) {
+        int numValidCells = room.cells.Count;
+        for (int i = 0; i < room.cells.Count; i++) {
+            if (CellNextToDoor(room.cells[i])) {
+                numValidCells--;
+                if (numValidCells < 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     private MazeCell CreateCell(IntVector2 coordinates) {

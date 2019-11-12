@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     private PlayerInputManager manager;
     private List<RawPlayerInput> players;
     private bool joiningPlayers;
+    public int levelIndex;
     
     // Start is called before the first frame update
     void Start()
@@ -99,7 +100,7 @@ public class MenuManager : MonoBehaviour
 
     public void startGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(levelIndex);
     }
 
     public void test(string message)
