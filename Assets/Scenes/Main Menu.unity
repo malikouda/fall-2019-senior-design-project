@@ -182,7 +182,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
+    m_SelectedColor: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -190,7 +190,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 21300000, guid: 2fe35c85ce9b04035bca531f64fcdaa9,
       type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 5cd60ec3f88f341e6856cf379ef89259, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: 2fe35c85ce9b04035bca531f64fcdaa9, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -949,7 +949,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 21300000, guid: 2fe35c85ce9b04035bca531f64fcdaa9,
       type: 3}
     m_PressedSprite: {fileID: 21300000, guid: 5cd60ec3f88f341e6856cf379ef89259, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 21300000, guid: 2fe35c85ce9b04035bca531f64fcdaa9, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -2526,11 +2526,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 5a04862a8efc348a59217822d4a98a43, type: 3}
+    m_Font: {fileID: 12800000, guid: 9b7bf5b34b59e2e4e9cc643387313d6e, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
