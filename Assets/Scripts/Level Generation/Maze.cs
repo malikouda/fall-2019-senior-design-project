@@ -14,11 +14,14 @@ public class Maze : MonoBehaviour {
     public GameObject ceilingPrefab;
     public GameObject ceilingCellPrefab;
     public GameObject mazeRoomPrefab;
+    public MazeArt artPrefab;
     public int numObjectives;
     public GameObject objectivePrefab;
     public GameObject finalObjectivePrefab;
     [Range(0f, 1f)]
     public float doorProbability;
+    [Range(0f, 0.2f)]
+    public float artProbability;
 
     public MazeRoomSettings[] roomSettings;
 
@@ -88,6 +91,11 @@ public class Maze : MonoBehaviour {
             } else {
                 foreach (MazeCell cell in rooms[i].cells) {
                     cell.transform.parent = mazeRoom.transform;
+                    if (Random.value < artProbability && !CellNextToDoor(cell)) {
+                        MazeArt prefab = Instantiate(artPrefab) as MazeArt;
+                        prefab.transform.position = new Vector3(cell.transform.position.x, 0.2f, cell.transform.position.z);
+                        prefab.transform.parent = cell.transform.parent;
+                    }
                 }
             }
         }
