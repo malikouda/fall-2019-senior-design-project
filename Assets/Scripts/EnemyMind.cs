@@ -52,6 +52,7 @@ public class EnemyMind : MonoBehaviour
                 break;
             //The guard has caught a player
             case STATES.ALERT:
+                Debug.Log("ALERT");
                 //Go to position
                 move.goToPosition(target.gameObject.transform.position);
                 

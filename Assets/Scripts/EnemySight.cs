@@ -53,9 +53,10 @@ public class EnemySight : MonoBehaviour
                 if (!p.isActivated)
                     continue;
                 //if the player is within the cone of vision or they are too close to the guard, they can be seen
-                Vector3 dir = p.transform.position - transform.position;
+                Vector3 correctedPosition = new Vector3(p.transform.position.x, 1, p.transform.position.z);
+                Vector3 dir = correctedPosition - transform.position;
                 float angle = Vector3.Angle(dir, transform.forward);
-                float pDistance = Vector3.Distance(p.gameObject.transform.position, transform.position);
+                float pDistance = Vector3.Distance(correctedPosition, transform.position);
                 if (angle <= visionThreshold/2 || pDistance < SenseDistance)
                 {
                     RaycastHit hit;
