@@ -10,7 +10,7 @@ public class FinalObjective : MonoBehaviour
         {
             if (GameManager.instance.numObjectives <= 0)
             {
-                Debug.Log("WIN");
+                GameManager.instance.wonGame();
             }
         }
     }

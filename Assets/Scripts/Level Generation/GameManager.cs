@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,7 +16,11 @@ public class GameManager : MonoBehaviour
     public bool generateCeilings = false;
     public bool restart = false;
     public int numObjectives;
+    public Text objText;
+    public Animator winScreen;
+    public Animator loseScreen;
 
+    private int maxObjectives;
     private int numPlayers;
     private Maze mazeInstance;
 
@@ -27,6 +32,9 @@ public class GameManager : MonoBehaviour
 
     void Start() {
         BeginGame();
+        maxObjectives = numObjectives;
+        objText.text = "Objectives: " + numObjectives + "/" + maxObjectives;
+
     }
 
     void Update() {
@@ -79,17 +87,25 @@ public class GameManager : MonoBehaviour
         if (numPlayers <= 0)
         {
             //This is where the game over screen goes
-            SceneManager.LoadScene(0);
+            loseScreen.SetTrigger("Lose");
         }
     }
 
+    //When a player is released
     public void releasePlayer()
     {
         ++numPlayers;
     }
 
+    //When a minigame is completed
     public void completedMinigame()
     {
         --numObjectives;
+        objText.text = "Objectives: " + numObjectives + "/" + maxObjectives;
+    }
+
+    public void wonGame()
+    {
+        winScreen.SetTrigger("Win");
     }
 }
