@@ -40,7 +40,6 @@ public class GameManager : MonoBehaviour
         mazeInstance = Instantiate(mazePrefab) as Maze;
         mazeInstance.Generate();
         mazeInstance.gameObject.transform.localScale *= 3;
-        numObjectives = mazeInstance.numObjectives;
         foreach(RawPlayerInput p in GameObject.FindObjectsOfType<RawPlayerInput>())
         {
             GameObject playerOBJ = Instantiate(playerPrefab.gameObject);
