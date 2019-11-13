@@ -8,6 +8,7 @@ public class guardMovement : MonoBehaviour {
     public float threshold;
     [Tooltip("How fast the guard moves when they are alerted")]
     public float alertSpeed;
+    [Tooltip("How far the guard has to be to catch you")]
     public float catchDistance;
     //state controller
     private EnemyMind mind;
@@ -21,9 +22,13 @@ public class guardMovement : MonoBehaviour {
     [HideInInspector]
     public NavMeshAgent mAgent;
     private int direction = 1;
+    //Is searching for player
     private bool searching;
+    //The target they are looking for
     private Vector3 searchTarget;
+    //How long the guard needs to wait for
     private float randomWaitTime;
+    //How long they have currently waited for
     private float currentWaitTime;
 
     // Start is called before the first frame update
@@ -36,11 +41,14 @@ public class guardMovement : MonoBehaviour {
 
     }
 
+    
+    //Assign the guards patrol
     public void assignPatrol(List<Vector3> newPatrol)
     {
         patrol = newPatrol;
     }
 
+    //Assign the guards patrol and shows the path (For testing)
     public void assignPatrol(List<Vector3> newPatrol, Color DebugColor)
     {
         patrol = new List<Vector3>();
@@ -54,11 +62,13 @@ public class guardMovement : MonoBehaviour {
         }
     }
 
+    //Is within the threshold of their destination
     public bool isWithinThreshold()
     {
         return mAgent.remainingDistance < threshold;
     }
 
+    //Has the guard cause a player
     public bool hasCaughtPlayer(GameObject target)
     {
         if (Vector3.Distance(transform.position, target.transform.position) < catchDistance)
@@ -69,33 +79,30 @@ public class guardMovement : MonoBehaviour {
         return false;
     }
 
+    //Continue on to the next patrol point
     public void goToNextPatrol()
     {
         index = (index + 1) % patrol.Count;
         mAgent.destination = patrol[index];
     }
      
+    //Manually set navmesh destination
     public void goToPosition (Vector3 target)
     {
         mAgent.destination = target;
     }
     
+    //Speed up when chasing
     public void increaseSpeed()
     {
         mAgent.speed = alertSpeed;
         mAgent.autoBraking = false;
     }
 
+    //Return to normal speed
     public void decreaseSpeed()
     {
         mAgent.speed = normalSpeed;
         mAgent.autoBraking = true;
-    }
-
-    public void resetSpeed()
-    {
-        mAgent.speed = normalSpeed;
-        mAgent.autoBraking = true;
-
     }
 }

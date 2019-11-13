@@ -10,14 +10,18 @@ public class EnemyMind : MonoBehaviour
     public float minWaitTime;
     [Tooltip("Max amount of time the guard will wait at every waypoint")]
     public float MaxWaitTime;
+    [Tooltip("How long without sighting before the guard gives up")]
     public float totalAlertTime;
 
+    private float currentAlertTime;
     private Character target;
     private guardMovement move;
+    private EnemySight sight;
     public STATES state;
     // Start is called before the first frame update
     void Start()
     {
+        sight = GetComponent<EnemySight>();
         move = GetComponent<guardMovement>();
         state = 0;
     }
@@ -25,26 +29,50 @@ public class EnemyMind : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Simple state machine
         switch (state)
         {
+            //The guard is patrolling
             case STATES.PATROL:
+                //if the guard is at the next patrol point, go to the next one
                 if (move.isWithinThreshold())
                 {
                     state = STATES.WAITING;
                     Invoke("goToNextPatrol", Random.Range(minWaitTime, MaxWaitTime));
                 }
                 break;
+            //The guard has seen a player partially
             case STATES.INVES:
+                //The guard is at the last known location, return to patrol
                 if (move.isWithinThreshold())
                 {
                     //TODO: MAKE GUARD ACTUALLY INVESTIGATE
                     state = STATES.PATROL;
                 }
                 break;
+            //The guard has caught a player
             case STATES.ALERT:
+                //Go to position
                 move.goToPosition(target.gameObject.transform.position);
+                
+                if (!sight.canSeeTarget(target.gameObject))
+                {
+                    currentAlertTime += Time.deltaTime;
+                    if (currentAlertTime > MaxWaitTime)
+                    {
+                        currentAlertTime = 0;
+                        state = STATES.PATROL;
+                        target = null;
+                    }
+                }else
+                {
+                    currentAlertTime = 0;
+                }
+                
+                //If the player has been caught
                 if (move.hasCaughtPlayer(target.gameObject))
                 {
+                    //Immobilize the character and update the game manager
                     GameManager.instance.catchPlayer();
                     target.immobilize();
                     state = STATES.PATROL;
@@ -72,7 +100,7 @@ public class EnemyMind : MonoBehaviour
     //go to next patrol point
     private void goToNextPatrol()
     {
-        Debug.Log("Go to next Patrol");
+
         //State has changed since waiting, do not go back to patrolling
         if (state != STATES.WAITING)
             return;

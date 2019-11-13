@@ -48,21 +48,22 @@ public class EnemySight : MonoBehaviour
             bool seen = false;
             foreach (Character p in players)
             {
+
                 //If the player is caught, no need to check them
                 if (!p.isActivated)
                     continue;
                 //if the player is within the cone of vision or they are too close to the guard, they can be seen
                 Vector3 dir = p.transform.position - transform.position;
                 float angle = Vector3.Angle(dir, transform.forward);
-                float distance = Vector3.Distance(p.gameObject.transform.position, transform.position);
-                if (angle <= visionThreshold/2 || distance < SenseDistance)
+                float pDistance = Vector3.Distance(p.gameObject.transform.position, transform.position);
+                if (angle <= visionThreshold/2 || pDistance < SenseDistance)
                 {
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, dir.normalized, out hit))
-                    { 
+                    {
                         if(hit.collider.tag == "Player")
                         {
-                            hideTime -= Time.deltaTime + 1/distance;
+                            hideTime -= Time.deltaTime + 1/pDistance;
 
                             //If the player has been spotted too much
                             if (hideTime <= 0)
@@ -98,6 +99,28 @@ public class EnemySight : MonoBehaviour
         }
 
 
+    }
+
+    public bool canSeeTarget(GameObject target)
+    {
+        //if the player is within the cone of vision or they are too close to the guard, they can be seen
+        Vector3 dir = target.transform.position - transform.position;
+        float angle = Vector3.Angle(dir, transform.forward);
+        float distance = Vector3.Distance(target.gameObject.transform.position, transform.position);
+        if (angle <= visionThreshold / 2 || distance < SenseDistance)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dir.normalized, out hit))
+            {
+                if (hit.collider.gameObject == target)
+                {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
     }
 
     private void OnDrawGizmos()

@@ -24,7 +24,7 @@ public class Character : MonoBehaviour
     private GameObject interactable;
     private Vector2 move;
     private minigame currentGame;
-
+    private Animator anim;
     private MazeCell currentCell;
     private List<Character> players;
 
@@ -40,6 +40,7 @@ public class Character : MonoBehaviour
     private void Start() {
         rb = GetComponent<Rigidbody>();
         gameManager = FindObjectOfType<GameManager>();
+        anim = GetComponentInChildren<Animator>();
         isActivated = true;
         players = new List<Character>();
         foreach (GameObject g in GameObject.FindGameObjectsWithTag("Player"))
@@ -57,19 +58,31 @@ public class Character : MonoBehaviour
             rb.velocity = Vector3.zero;
             foreach (Character p in players)
             {
-                if (p.isActivated && Vector3.Distance(transform.position,p.transform.position) < .01f)
+                float d = Vector3.Distance(transform.position, p.transform.position);
+                if (p.isActivated &&  d < 1.5f)
                 {
+                    
                     isActivated = true;
                     tag = "Player";
+                    GameManager.instance.releasePlayer();
                     break;
                 }
             }
             return;
         }
 
+        if (rb.velocity.magnitude >= .01f)
+        {
+            anim.SetBool("Walking", true);
+        }else
+        {
+            anim.SetBool("Walking", false);
+        }
+
+
         Vector2 m = inputDevice.move * Time.deltaTime;
         Vector3 combinedInput = new Vector3(m.x, 0, m.y);
-
+        
         moveDirection = new Vector3(combinedInput.normalized.x, 0, combinedInput.normalized.z);
         if (moveDirection != Vector3.zero)
         {
@@ -175,22 +188,22 @@ public class Character : MonoBehaviour
         {
             case PLAYERID.BLUE:
                 {
-                    GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
+                    GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.blue;
                     break;
                 }
             case PLAYERID.RED:
                 {
-                    GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+                    GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.red;
                     break;
                 }
             case PLAYERID.GREEN:
                 {
-                    GetComponentInChildren<MeshRenderer>().material.color = Color.green;
+                    GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.green;
                     break;
                 }
             case PLAYERID.YELLOW:
                 {
-                    GetComponentInChildren<MeshRenderer>().material.color = Color.yellow;
+                    GetComponentInChildren<SkinnedMeshRenderer>().material.color = Color.yellow;
                     break;
                 }
         }

@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   threshold: 0.2
-  alertSpeed: 6
+  alertSpeed: 4
   catchDistance: 3
   mAgent: {fileID: 0}
 --- !u!195 &6048929208024196713
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minWaitTime: 0
   MaxWaitTime: 5
-  totalAlertTime: 0
+  totalAlertTime: 4
   state: 0
 --- !u!114 &1656269806247711488
 MonoBehaviour:
@@ -207,7 +207,7 @@ MonoBehaviour:
   SenseDistance: 4
   hideTime: 5
   hideCooldown: 0.5
-  drawSight: 1
+  drawSight: 0
   distance: 100
   visionThreshold: 45
 --- !u!95 &6107277667026631148

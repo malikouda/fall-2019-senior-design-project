@@ -319,13 +319,13 @@ public class patrolCreation : MonoBehaviour
             List<Vector3> b = convertToVector3(getAllPoints(removedEdge.end));
             GameObject guard1 = Instantiate(Resources.Load("GuardPrefab"), a[0], Quaternion.identity) as GameObject;
             GameObject guard2 = Instantiate(Resources.Load("GuardPrefab"), b[0], Quaternion.identity) as GameObject;
-            guard1.GetComponent<guardMovement>().assignPatrol(a,Color.red);
-            guard2.GetComponent<guardMovement>().assignPatrol(b,Color.blue);
+            guard1.GetComponent<guardMovement>().assignPatrol(a);
+            guard2.GetComponent<guardMovement>().assignPatrol(b);
         }
         else
         {
             GameObject guard = Instantiate(Resources.Load("GuardPrefab"), totalPatrol[0].start.pos, Quaternion.identity) as GameObject;
-            guard.GetComponent<guardMovement>().assignPatrol(convertToVector3(getAllPoints(totalPatrol[0].start)),Color.blue);
+            guard.GetComponent<guardMovement>().assignPatrol(convertToVector3(getAllPoints(totalPatrol[0].start)));
         }
     }
 
