@@ -47,11 +47,6 @@ public class Maze : MonoBehaviour {
         List<MazeRoom> objRooms = new List<MazeRoom>();
 
         for (int i = 0; i < rooms.Count; i++) {
-            if (rooms[i].size > 1) {
-                if (RoomHasValidPlacement(rooms[i])) {
-                    objRooms.Add(rooms[i]);
-                }
-            }
             GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
@@ -99,7 +94,17 @@ public class Maze : MonoBehaviour {
                     }
                 }
             }
+
+            if (rooms[i].size > 1) {
+                if (RoomHasValidPlacement(rooms[i])) {
+                    findEligibleCells(rooms[i]);
+                    if (rooms[i].eligibleCells.Count > 0) {
+                        objRooms.Add(rooms[i]);
+                    }
+                }
+            }
         }
+
 
         //Spawn the objectives
         spawnObjective(finalObjectivePrefab, objRooms);
@@ -109,21 +114,29 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    private void spawnObjective(GameObject objectivePrefabInst, List<MazeRoom> objRooms)
-    {
+    private void findEligibleCells(MazeRoom room) {
+        for (int i = 0; i < room.cells.Count; i++) {
+            MazeCell cell = room.cells[i];
+            if (!CellNextToDoor(cell) && !CellNextToObject(cell) && !cell.occupied) {
+                room.eligibleCells.Add(cell);
+            }
+        }
+    }
+
+    private void spawnObjective(GameObject objectivePrefabInst, List<MazeRoom> objRooms) {
         int randomRoomIndex = Random.Range(0, objRooms.Count);
         MazeRoom randomRoom = objRooms[randomRoomIndex];
-        int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
-        MazeCell randomCell = randomRoom.cells[randomCellIndex];
-        while (CellNextToDoor(randomCell) || randomCell.occupied || CellNextToObject(randomCell)) {
-            randomCellIndex = Random.Range(0, randomRoom.cells.Count);
-            randomCell = randomRoom.cells[randomCellIndex];
-        }
+
+        int randomCellIndex = Random.Range(0, randomRoom.eligibleCells.Count);
+        MazeCell randomCell = randomRoom.eligibleCells[randomCellIndex];
+
         randomCell.occupied = true;
-        Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
+
+        Vector3 objPosition = randomRoom.eligibleCells[randomCellIndex].transform.position;
         GameObject objective = Instantiate(objectivePrefabInst) as GameObject;
         objective.transform.position = objPosition * 3;
         objRooms.Remove(randomRoom);
+        randomRoom.eligibleCells.Remove(randomCell);
     }
 
     private bool CellNextToDoor(MazeCell cell) {
