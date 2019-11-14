@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311912, g: 0.3807398, b: 0.3587271, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -329,8 +329,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 688242712}
-  - {fileID: 2141506680}
   - {fileID: 1245552059}
+  - {fileID: 2141506680}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazePrefab: {fileID: 4330255248282845672, guid: 09218179c6fbf76449539b969b89548c,
     type: 3}
-  playerPrefab: {fileID: 7253095677746851839, guid: bf05358183221134ca68184c0ed877f8,
+  playerPrefab: {fileID: 8001500824241814489, guid: bf05358183221134ca68184c0ed877f8,
     type: 3}
   players:
   - {fileID: 0}
@@ -1219,6 +1219,9 @@ MonoBehaviour:
   generateCeilings: 0
   restart: 0
   numObjectives: 4
+  objText: {fileID: 688242714}
+  winScreen: {fileID: 1245552062}
+  loseScreen: {fileID: 2141506683}
 --- !u!4 &934843956
 Transform:
   m_ObjectHideFlags: 0
@@ -1442,7 +1445,7 @@ RectTransform:
   - {fileID: 18455154}
   - {fileID: 494437092}
   m_Father: {fileID: 53921893}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1769,7 +1772,7 @@ RectTransform:
   - {fileID: 573634628}
   - {fileID: 688765746}
   m_Father: {fileID: 53921893}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
