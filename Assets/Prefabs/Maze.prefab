@@ -60,12 +60,15 @@ MonoBehaviour:
     type: 3}
   mazeRoomPrefab: {fileID: 653585297626500561, guid: 64a90310176b4ab4fb1ebcfe27955899,
     type: 3}
+  artPrefab: {fileID: 7390228238728053518, guid: 70d0cae9e91c8fa47b652d419fa06b5b,
+    type: 3}
   numObjectives: 4
   objectivePrefab: {fileID: 8966107077878855504, guid: b2b5b3ceb62984c4a97c75b638423e8e,
     type: 3}
   finalObjectivePrefab: {fileID: 5884598195823200151, guid: cc1e66d6d53c77c4cb38043ac7291972,
     type: 3}
   doorProbability: 0.1
+  artProbability: 0
   roomSettings:
   - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}
