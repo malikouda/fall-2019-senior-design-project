@@ -7,12 +7,13 @@ public class hackerGame : MonoBehaviour, minigame
 {
 
     public int length;
-    public GameObject uiObj;
+    public guiButtons guiButtons;
     private List<int> pattern;
     private int correctInput;
     private Text playText;
     private Animator anim;
-    
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -27,22 +28,22 @@ public class hackerGame : MonoBehaviour, minigame
         {
             case (int)BUTTONS.X:
                 {
-                    playText.text = "x";
+                    guiButtons.chooseX();
                     break;
                 }
             case (int)BUTTONS.Y:
                 {
-                    playText.text = "y";
+                    guiButtons.chooseY();
                     break;
                 }
             case (int)BUTTONS.A:
                 {
-                    playText.text = "a";
+                    guiButtons.chooseA();
                     break;
                 }
             case (int)BUTTONS.B:
                 {
-                    playText.text = "b";
+                    guiButtons.chooseB();
                     break;
                 }
         }
@@ -51,7 +52,7 @@ public class hackerGame : MonoBehaviour, minigame
 
     public void startGame()
     {
-        uiObj.SetActive(true);
+        guiButtons.activate();
         pattern = new List<int>();
         correctInput = 0;
         for (int i = 0; i <= length; i++)
@@ -65,6 +66,7 @@ public class hackerGame : MonoBehaviour, minigame
 
     public void playerInput(int input)
     {
+        guiButtons.reset();
         if (input == pattern[correctInput])
         {
             
@@ -96,6 +98,6 @@ public class hackerGame : MonoBehaviour, minigame
 
     public void endGame()
     {
-        uiObj.SetActive(false);
+        guiButtons.deactivate();
     }
 }

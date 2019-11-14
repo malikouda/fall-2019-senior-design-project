@@ -172,7 +172,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2889922087637209687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.24388, y: 0.24388, z: 0.24388}
   m_Children: []
   m_Father: {fileID: 8966107078779378756}
@@ -714,7 +714,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   length: 3
-  uiObj: {fileID: 8966107078779378757}
+  guiButtons:
+    obj: {fileID: 8966107078779378757}
+    A: {fileID: 7724258307645269849}
+    B: {fileID: 5915655502621788550}
+    Y: {fileID: 2584482106862071234}
+    X: {fileID: 6430923177956515807}
 --- !u!95 &8966107077878855510
 Animator:
   serializedVersion: 3
@@ -842,7 +847,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8966107078779378756
 RectTransform:
   m_ObjectHideFlags: 0
