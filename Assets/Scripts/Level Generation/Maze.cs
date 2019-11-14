@@ -93,7 +93,7 @@ public class Maze : MonoBehaviour {
                     cell.transform.parent = mazeRoom.transform;
                     if (Random.value < artProbability && !CellNextToDoor(cell)) {
                         MazeArt prefab = Instantiate(artPrefab) as MazeArt;
-                        prefab.transform.position = new Vector3(cell.transform.position.x, 0.2f, cell.transform.position.z);
+                        prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
                         prefab.transform.parent = cell.transform.parent;
                     }
                 }

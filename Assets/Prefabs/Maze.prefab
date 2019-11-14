@@ -68,7 +68,7 @@ MonoBehaviour:
   finalObjectivePrefab: {fileID: 5884598195823200151, guid: cc1e66d6d53c77c4cb38043ac7291972,
     type: 3}
   doorProbability: 0.1
-  artProbability: 0
+  artProbability: 0.111
   roomSettings:
   - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}
