@@ -10,6 +10,8 @@ public class MazeCell : MonoBehaviour {
 
     public MazeRoom room;
 
+    public bool occupied = false;
+
     public void Initialize(MazeRoom room) {
         room.Add(this);
         transform.GetChild(0).GetComponent<Renderer>().material = room.settings.floorMaterial;

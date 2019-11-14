@@ -91,7 +91,8 @@ public class Maze : MonoBehaviour {
             } else {
                 foreach (MazeCell cell in rooms[i].cells) {
                     cell.transform.parent = mazeRoom.transform;
-                    if (Random.value < artProbability && !CellNextToDoor(cell)) {
+                    if (Random.value < artProbability && !CellNextToDoor(cell) && !cell.occupied && !CellNextToObject(cell)) {
+                        cell.occupied = true;
                         MazeArt prefab = Instantiate(artPrefab) as MazeArt;
                         prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
                         prefab.transform.parent = cell.transform.parent;
@@ -114,10 +115,11 @@ public class Maze : MonoBehaviour {
         MazeRoom randomRoom = objRooms[randomRoomIndex];
         int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
         MazeCell randomCell = randomRoom.cells[randomCellIndex];
-        while (CellNextToDoor(randomCell)) {
+        while (CellNextToDoor(randomCell) || randomCell.occupied || CellNextToObject(randomCell)) {
             randomCellIndex = Random.Range(0, randomRoom.cells.Count);
             randomCell = randomRoom.cells[randomCellIndex];
         }
+        randomCell.occupied = true;
         Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
         GameObject objective = Instantiate(objectivePrefabInst) as GameObject;
         objective.transform.position = objPosition * 3;
@@ -134,6 +136,20 @@ public class Maze : MonoBehaviour {
             }
         }
         return nextToDoor;
+    }
+
+    private bool CellNextToObject(MazeCell cell) {
+        bool nextToObject = false;
+        MazeDirection[] directions = new MazeDirection[4] { MazeDirection.North, MazeDirection.East, MazeDirection.South, MazeDirection.West };
+        for (int i = 0; i < 4; i++) {
+            if (cell.GetEdge(directions[i]).otherCell != null) {
+                if (cell.GetEdge(directions[i]).otherCell.occupied) {
+                    nextToObject = true;
+                    break;
+                }
+            }
+        }
+        return nextToObject;
     }
 
     private bool RoomHasValidPlacement(MazeRoom room) {
