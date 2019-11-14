@@ -47,11 +47,6 @@ public class Maze : MonoBehaviour {
         List<MazeRoom> objRooms = new List<MazeRoom>();
 
         for (int i = 0; i < rooms.Count; i++) {
-            if (rooms[i].size > 1) {
-                if (RoomHasValidPlacement(rooms[i])) {
-                    objRooms.Add(rooms[i]);
-                }
-            }
             GameObject mazeRoom = Instantiate(mazeRoomPrefab) as GameObject;
             mazeRoom.name = "Maze Room " + (i + 1);
             mazeRoom.transform.parent = transform;
@@ -91,14 +86,25 @@ public class Maze : MonoBehaviour {
             } else {
                 foreach (MazeCell cell in rooms[i].cells) {
                     cell.transform.parent = mazeRoom.transform;
-                    if (Random.value < artProbability && !CellNextToDoor(cell)) {
+                    if (Random.value < artProbability && !CellNextToDoor(cell) && !cell.occupied && !CellNextToObject(cell)) {
+                        cell.occupied = true;
                         MazeArt prefab = Instantiate(artPrefab) as MazeArt;
                         prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
                         prefab.transform.parent = cell.transform.parent;
                     }
                 }
             }
+
+            if (rooms[i].size > 1) {
+                if (RoomHasValidPlacement(rooms[i])) {
+                    findEligibleCells(rooms[i]);
+                    if (rooms[i].eligibleCells.Count > 0) {
+                        objRooms.Add(rooms[i]);
+                    }
+                }
+            }
         }
+
 
         //Spawn the objectives
         spawnObjective(finalObjectivePrefab, objRooms);
@@ -108,20 +114,29 @@ public class Maze : MonoBehaviour {
         }
     }
 
-    private void spawnObjective(GameObject objectivePrefabInst, List<MazeRoom> objRooms)
-    {
+    private void findEligibleCells(MazeRoom room) {
+        for (int i = 0; i < room.cells.Count; i++) {
+            MazeCell cell = room.cells[i];
+            if (!CellNextToDoor(cell) && !CellNextToObject(cell) && !cell.occupied) {
+                room.eligibleCells.Add(cell);
+            }
+        }
+    }
+
+    private void spawnObjective(GameObject objectivePrefabInst, List<MazeRoom> objRooms) {
         int randomRoomIndex = Random.Range(0, objRooms.Count);
         MazeRoom randomRoom = objRooms[randomRoomIndex];
-        int randomCellIndex = Random.Range(0, randomRoom.cells.Count);
-        MazeCell randomCell = randomRoom.cells[randomCellIndex];
-        while (CellNextToDoor(randomCell)) {
-            randomCellIndex = Random.Range(0, randomRoom.cells.Count);
-            randomCell = randomRoom.cells[randomCellIndex];
-        }
-        Vector3 objPosition = randomRoom.cells[randomCellIndex].transform.position;
+
+        int randomCellIndex = Random.Range(0, randomRoom.eligibleCells.Count);
+        MazeCell randomCell = randomRoom.eligibleCells[randomCellIndex];
+
+        randomCell.occupied = true;
+
+        Vector3 objPosition = randomRoom.eligibleCells[randomCellIndex].transform.position;
         GameObject objective = Instantiate(objectivePrefabInst) as GameObject;
         objective.transform.position = objPosition * 3;
         objRooms.Remove(randomRoom);
+        randomRoom.eligibleCells.Remove(randomCell);
     }
 
     private bool CellNextToDoor(MazeCell cell) {
@@ -134,6 +149,20 @@ public class Maze : MonoBehaviour {
             }
         }
         return nextToDoor;
+    }
+
+    private bool CellNextToObject(MazeCell cell) {
+        bool nextToObject = false;
+        MazeDirection[] directions = new MazeDirection[4] { MazeDirection.North, MazeDirection.East, MazeDirection.South, MazeDirection.West };
+        for (int i = 0; i < 4; i++) {
+            if (cell.GetEdge(directions[i]).otherCell != null) {
+                if (cell.GetEdge(directions[i]).otherCell.occupied) {
+                    nextToObject = true;
+                    break;
+                }
+            }
+        }
+        return nextToObject;
     }
 
     private bool RoomHasValidPlacement(MazeRoom room) {
