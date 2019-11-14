@@ -7,10 +7,12 @@ public class hackerGame : MonoBehaviour, minigame
 {
 
     public int length;
+    public GameObject uiObj;
     private List<int> pattern;
     private int correctInput;
     private Text playText;
     private Animator anim;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +51,7 @@ public class hackerGame : MonoBehaviour, minigame
 
     public void startGame()
     {
+        uiObj.SetActive(true);
         pattern = new List<int>();
         correctInput = 0;
         for (int i = 0; i <= length; i++)
@@ -89,5 +92,10 @@ public class hackerGame : MonoBehaviour, minigame
         GameManager.instance.completedMinigame();
         Destroy(gameObject);
 
+    }
+
+    public void endGame()
+    {
+        uiObj.SetActive(false);
     }
 }

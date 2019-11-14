@@ -62,6 +62,7 @@ public class EnemySight : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Raycast(transform.position, dir.normalized, out hit))
                     {
+                        Debug.DrawLine(transform.position, hit.point);
                         if(hit.collider.tag == "Player")
                         {
                             hideTime -= Time.deltaTime + 1/pDistance;

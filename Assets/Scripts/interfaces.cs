@@ -9,6 +9,11 @@ public enum DIFFICULTY {EASY,MEDIUM,HARD}
 public interface minigame
 {
     void startGame();
+    void endGame();
     void playerInput(int input);
     void complete();
+}
+
+public class guiButtons
+{
 }
