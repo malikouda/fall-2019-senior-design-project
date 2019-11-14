@@ -64,6 +64,12 @@ public class Maze : MonoBehaviour {
                     ceilingCell.name = "Ceiling Cell " + cell.coordinates.x + ", " + cell.coordinates.z;
                     ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
                     ceilingCell.transform.parent = ceiling.transform;
+                    if (Random.value < artProbability && !CellNextToDoor(cell) && !cell.occupied && !CellNextToObject(cell)) {
+                        cell.occupied = true;
+                        MazeArt prefab = Instantiate(artPrefab) as MazeArt;
+                        prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
+                        prefab.transform.parent = cell.transform.parent;
+                    }
                 }
 
                 MeshFilter[] meshFilters = rooms[i].ceiling.GetComponentsInChildren<MeshFilter>();

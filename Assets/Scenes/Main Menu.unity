@@ -1742,7 +1742,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Thief and co
+  m_Text: Thief and co.
 --- !u!222 &1157102527
 CanvasRenderer:
   m_ObjectHideFlags: 0
