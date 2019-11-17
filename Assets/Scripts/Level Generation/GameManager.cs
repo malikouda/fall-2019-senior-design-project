@@ -16,7 +16,10 @@ public class GameManager : MonoBehaviour
     public bool generateCeilings = false;
     public bool restart = false;
     public int numObjectives;
+    [Tooltip("The objective text")]
     public Text objText;
+    [Tooltip("The Objective animator")]
+    public Animator objanim;
     public Animator winScreen;
     public Animator loseScreen;
 
@@ -33,8 +36,7 @@ public class GameManager : MonoBehaviour
     void Start() {
         BeginGame();
         maxObjectives = numObjectives;
-        objText.text = "Objectives: " + numObjectives + "/" + maxObjectives;
-
+        displayObjectives();
     }
 
     void Update() {
@@ -101,11 +103,21 @@ public class GameManager : MonoBehaviour
     public void completedMinigame()
     {
         --numObjectives;
-        objText.text = "Objectives: " + numObjectives + "/" + maxObjectives;
+        displayObjectives();
     }
 
     public void wonGame()
     {
         winScreen.SetTrigger("Win");
+    }
+
+    //Shows how many objectives are left
+    public void displayObjectives()
+    {
+        if (numObjectives == 0)
+            objText.text = "Diamond is open!";
+        else
+            objText.text = numObjectives + " security measures left";
+        objanim.SetTrigger("display");
     }
 }

@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 53921892}
   - component: {fileID: 53921891}
   - component: {fileID: 53921890}
+  - component: {fileID: 53921894}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -339,6 +340,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &53921894
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53921889}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe333d2c78b42844f832cb9558e3f3ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &145947356
 GameObject:
   m_ObjectHideFlags: 0
@@ -921,11 +941,11 @@ RectTransform:
   m_Father: {fileID: 53921893}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 92.6, y: -29}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: 300, y: 50}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &688242713
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +983,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: bef5f5b956e63467f9748d61925f5b10, type: 3}
     m_FontSize: 16
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
     m_MaxSize: 300
     m_Alignment: 4
@@ -972,7 +992,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Objectives: 0/4'
+  m_Text: 4 objectives left
 --- !u!222 &688242715
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1220,6 +1240,7 @@ MonoBehaviour:
   restart: 0
   numObjectives: 4
   objText: {fileID: 688242714}
+  objanim: {fileID: 53921894}
   winScreen: {fileID: 1245552062}
   loseScreen: {fileID: 2141506683}
 --- !u!4 &934843956

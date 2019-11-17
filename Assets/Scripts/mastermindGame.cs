@@ -39,7 +39,7 @@ public class mastermindGame : MonoBehaviour, minigame
         {
 
             correctInput++;
-            if (correctInput > length)
+            if (correctInput >= length)
             {
                 complete();
 
