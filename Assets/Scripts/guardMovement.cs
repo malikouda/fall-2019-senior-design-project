@@ -31,6 +31,7 @@ public class guardMovement : MonoBehaviour {
     //How long they have currently waited for
     private float currentWaitTime;
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,7 +42,6 @@ public class guardMovement : MonoBehaviour {
 
     }
 
-    
     //Assign the guards patrol
     public void assignPatrol(List<Vector3> newPatrol)
     {
@@ -105,4 +105,5 @@ public class guardMovement : MonoBehaviour {
         mAgent.speed = normalSpeed;
         mAgent.autoBraking = true;
     }
+
 }

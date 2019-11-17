@@ -12,30 +12,38 @@ public class EnemyMind : MonoBehaviour
     public float MaxWaitTime;
     [Tooltip("How long without sighting before the guard gives up")]
     public float totalAlertTime;
+    [Tooltip("How often to check if the guard is stuck")]
+    public float stuckWaitTime;
+    [Tooltip("The state the guard is in")]
+    public STATES state;
 
     private float currentAlertTime;
     private Character target;
     private guardMovement move;
     private EnemySight sight;
-    public STATES state;
+    private bool isStuck;
+
     // Start is called before the first frame update
     void Start()
     {
+        isStuck = false;
         sight = GetComponent<EnemySight>();
         move = GetComponent<guardMovement>();
         state = 0;
+        StartCoroutine(isGuardStuck());
     }
 
     // Update is called once per frame
     void Update()
     {
+
         //Simple state machine
         switch (state)
         {
             //The guard is patrolling
             case STATES.PATROL:
                 //if the guard is at the next patrol point, go to the next one
-                if (move.isWithinThreshold())
+                if (move.isWithinThreshold() || isStuck)
                 {
                     state = STATES.WAITING;
                     Invoke("goToNextPatrol", Random.Range(minWaitTime, MaxWaitTime));
@@ -137,5 +145,24 @@ public class EnemyMind : MonoBehaviour
     {
         state = STATES.INVES;
         move.goToPosition(position);
+    }
+
+    //If the guard is stuck
+    private IEnumerator isGuardStuck()
+    {
+        while (true)
+        {
+            Vector3 lastPos = transform.position;
+            yield return new WaitForSeconds(5f);
+            if (Vector3.Distance(lastPos, transform.position) < .1f)
+            {
+                if (state == STATES.PATROL)
+                    isStuck = true;
+            }
+            else
+            {
+                isStuck = false;
+            }
+        }
     }
 }
