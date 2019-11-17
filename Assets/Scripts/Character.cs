@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public enum BUTTONS {X,Y,A,B};
     public enum ITEMS {TABLET};
     public float moveSpeed = 6f;
     public float rotateSpeed = 10f;
@@ -124,6 +123,22 @@ public class Character : MonoBehaviour
                 currentGame.playerInput((int)BUTTONS.B);
             }
         }
+
+        if (inputDevice.lTrigger)
+        {
+            if (currentGame != null)
+            {
+                currentGame.playerInput((int)BUTTONS.LTRIGGER);
+            }
+        }
+
+        if (inputDevice.rTrigger)
+        {
+            if (currentGame != null)
+            {
+                currentGame.playerInput((int)BUTTONS.RTRIGGER);
+            }
+        }
     }
 
     private void FixedUpdate() {
@@ -150,6 +165,7 @@ public class Character : MonoBehaviour
     {
         if (other.tag == "minigame")
         {
+            currentGame.endGame();
             currentGame = null;
         }
         else if (other.tag == "roomChange" && gameManager.generateCeilings) {

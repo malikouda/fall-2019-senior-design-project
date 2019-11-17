@@ -16,8 +16,10 @@ public class Maze : MonoBehaviour {
     public GameObject mazeRoomPrefab;
     public MazeArt artPrefab;
     public int numObjectives;
-    public GameObject objectivePrefab;
+    [Tooltip("The final objective prefab")]
     public GameObject finalObjectivePrefab;
+    [Tooltip("All the objective prefabs")]
+    public GameObject[] objectivePrefabs;
     [Range(0f, 1f)]
     public float doorProbability;
     [Range(0f, 0.2f)]
@@ -116,7 +118,7 @@ public class Maze : MonoBehaviour {
         spawnObjective(finalObjectivePrefab, objRooms);
         numObjectives = gameManager.numObjectives;
         for (int i = 0; i < numObjectives; i++) {
-            spawnObjective(objectivePrefab, objRooms);
+            spawnObjective(objectivePrefabs[Random.Range(0,objectivePrefabs.Length)], objRooms);
         }
     }
 

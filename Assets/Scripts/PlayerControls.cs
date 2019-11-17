@@ -56,7 +56,7 @@ public class PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""b1315867-4ee0-49be-a0f9-1bc72738fedc"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""Rtrigger"",
@@ -64,7 +64,7 @@ public class PlayerControls : IInputActionCollection, IDisposable
                     ""id"": ""e9e0e769-0599-4d59-bdf6-2d490b93bd87"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""a"",

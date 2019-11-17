@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum BUTTONS { X, Y, A, B, LTTRIGGER, RTRIGGER };
+public enum BUTTONS { X, Y, A, B, LTRIGGER, RTRIGGER};
 public enum PLAYERID {RED,GREEN,BLUE,YELLOW}
 public enum DIFFICULTY {EASY,MEDIUM,HARD}
 public interface minigame

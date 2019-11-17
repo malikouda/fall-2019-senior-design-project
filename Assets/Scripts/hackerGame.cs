@@ -98,6 +98,7 @@ public class hackerGame : MonoBehaviour, minigame
 
     public void endGame()
     {
+        guiButtons.reset();
         guiButtons.deactivate();
     }
 }

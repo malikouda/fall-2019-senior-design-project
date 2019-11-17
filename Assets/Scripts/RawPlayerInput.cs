@@ -8,7 +8,7 @@ public class RawPlayerInput : MonoBehaviour
     public class controllerInput
     {
         public Vector2 move;
-        public bool x, y, a, b,start;
+        public bool x, y, a, b,start,lTrigger,rTrigger;
         public void resetinput()
         {
             x = false;
@@ -16,6 +16,8 @@ public class RawPlayerInput : MonoBehaviour
             a = false;
             b = false;
             start = false;
+            lTrigger = false;
+            rTrigger = false;
         }
 
     }
@@ -92,6 +94,17 @@ public class RawPlayerInput : MonoBehaviour
     public void OnStart()
     {
         controller.start = true;
+    }
+
+    public void OnLtrigger()
+    {
+        Debug.Log("Left trigger");
+        controller.lTrigger = true;
+    }
+
+    public void OnRtrigger()
+    {
+        controller.rTrigger = true;
     }
 
 }
