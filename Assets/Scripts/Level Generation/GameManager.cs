@@ -2,6 +2,8 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,10 +24,12 @@ public class GameManager : MonoBehaviour
     public Animator objanim;
     public Animator winScreen;
     public Animator loseScreen;
-
+    public InputSystemUIInputModule inputModule;
+    
     private int maxObjectives;
     private int numPlayers;
     private Maze mazeInstance;
+    private int numAlertedGuards;
 
     private void Awake()
     {
@@ -79,8 +83,8 @@ public class GameManager : MonoBehaviour
         ++numPlayers;
     }
 
-    private void RestartGame() {
-        SceneManager.LoadScene(0);
+    public void RestartGame() {
+        SceneManager.LoadScene(1);
     }
 
     public void catchPlayer()
@@ -88,7 +92,12 @@ public class GameManager : MonoBehaviour
         --numPlayers;
         if (numPlayers <= 0)
         {
-            //This is where the game over screen goes
+            foreach(GameObject p in GameObject.FindGameObjectsWithTag("playerInput"))
+            {
+                PlayerInput i = p.GetComponent<PlayerInput>();
+                i.uiInputModule = inputModule;
+            }
+            loseScreen.gameObject.SetActive(true);
             loseScreen.SetTrigger("Lose");
         }
     }
@@ -108,6 +117,12 @@ public class GameManager : MonoBehaviour
 
     public void wonGame()
     {
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("playerInput"))
+        {
+            PlayerInput i = p.GetComponent<PlayerInput>();
+            i.uiInputModule = inputModule;
+        }
+        winScreen.gameObject.SetActive(true);
         winScreen.SetTrigger("Win");
     }
 
@@ -119,5 +134,37 @@ public class GameManager : MonoBehaviour
         else
             objText.text = numObjectives + " security measures left";
         objanim.SetTrigger("display");
+    }
+
+    public void returnToMenu()
+    {
+        foreach(GameObject player in GameObject.FindGameObjectsWithTag("playerInput"))
+        {
+            Destroy(player);
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    //When the players alert the guards
+    public void alertGuard()
+    {
+        //If there are currently no alerted guards, this is new, play alert
+        if (numAlertedGuards == 0)
+        {
+            GetComponent<AudioFade>().suddenChange();
+        }
+        ++numAlertedGuards;
+        Debug.Log(numAlertedGuards);
+    }
+
+    //When the players escape the guards
+    public void evadeGuard()
+    {
+        --numAlertedGuards;
+        //If there are currently no more alerted guards, go back to normal
+        if (numAlertedGuards == 0)
+        {
+            GetComponent<AudioFade>().fadeSounds();
+        }
     }
 }

@@ -17,11 +17,13 @@ public class EnemyMind : MonoBehaviour
     [Tooltip("The state the guard is in")]
     public STATES state;
 
-    private float currentAlertTime;
+    public float currentAlertTime;
     private Character target;
     private guardMovement move;
     private EnemySight sight;
     private bool isStuck;
+    private float currentWaitTime;
+    private float nextWaitTime;
 
     // Start is called before the first frame update
     void Start()
@@ -40,13 +42,21 @@ public class EnemyMind : MonoBehaviour
         //Simple state machine
         switch (state)
         {
+            case STATES.WAITING:
+                currentWaitTime += Time.deltaTime;
+                if (currentWaitTime > nextWaitTime)
+                {
+                    goToNextPatrol();
+                }
+                break;
             //The guard is patrolling
             case STATES.PATROL:
-                //if the guard is at the next patrol point, go to the next one
+                //if the guard is at the next patrol point, go to the next one, or if they're stuck
                 if (move.isWithinThreshold() || isStuck)
                 {
                     state = STATES.WAITING;
-                    Invoke("goToNextPatrol", Random.Range(minWaitTime, MaxWaitTime));
+                    nextWaitTime = Random.Range(minWaitTime, MaxWaitTime);
+                    currentWaitTime = 0;
                 }
                 break;
             //The guard has seen a player partially
@@ -55,23 +65,40 @@ public class EnemyMind : MonoBehaviour
                 if (move.isWithinThreshold())
                 {
                     //TODO: MAKE GUARD ACTUALLY INVESTIGATE
-                    state = STATES.PATROL;
+                    state = STATES.WAITING;
+                    currentWaitTime = 0;
                 }
                 break;
             //The guard has caught a player
             case STATES.ALERT:
-                Debug.Log("ALERT");
+
+                //if the target has already been caught
+                if (!target.isActivated)
+                {
+                    //go back to normal
+                    GameManager.instance.evadeGuard();
+                    state = STATES.PATROL;
+                    target = null;
+                    break;
+                }
+
                 //Go to position
                 move.goToPosition(target.gameObject.transform.position);
                 
+                //if guard can't see the target
                 if (!sight.canSeeTarget(target.gameObject))
                 {
+                    //increment the timer
                     currentAlertTime += Time.deltaTime;
-                    if (currentAlertTime > MaxWaitTime)
+                    //if it's been too long since they last saw the player
+                    if (currentAlertTime > totalAlertTime)
                     {
+                        //the player has escaped
+                        GameManager.instance.evadeGuard();
                         currentAlertTime = 0;
                         state = STATES.PATROL;
                         target = null;
+                        break;
                     }
                 }else
                 {
@@ -83,6 +110,7 @@ public class EnemyMind : MonoBehaviour
                 {
                     //Immobilize the character and update the game manager
                     GameManager.instance.catchPlayer();
+                    GameManager.instance.evadeGuard();
                     target.immobilize();
                     state = STATES.PATROL;
                     target = null;
@@ -90,16 +118,13 @@ public class EnemyMind : MonoBehaviour
                 break;
         }
     }
-
-    //manually change states
-    public void ChangeState(STATES newstate)
-    {
-        state = newstate;
-    }
      
     //Sets the agent to alert
     public void alert (Character target)
     {
+        //alert gamemanager to change music
+        GameManager.instance.alertGuard();
+        
         move.increaseSpeed();
         state = STATES.ALERT;
         this.target = target;

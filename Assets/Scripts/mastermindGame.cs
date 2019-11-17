@@ -27,7 +27,7 @@ public class mastermindGame : MonoBehaviour, minigame
 
     public void endGame()
     {
-        buttons.SetActive(true);
+        buttons.SetActive(false);
         StopAllCoroutines();
     }
 

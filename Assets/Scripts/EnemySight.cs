@@ -73,6 +73,7 @@ public class EnemySight : MonoBehaviour
                                 //Alert the guard
                                 mind.alert(p);
                                 hideTime = hideTimeMax;
+                                return;
                             }
                             if (hideTime <= hideTimeMax/2)
                             {

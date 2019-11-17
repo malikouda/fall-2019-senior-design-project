@@ -75,19 +75,16 @@ public class RawPlayerInput : MonoBehaviour
 
     public void OnY()
     {
-        Debug.Log("Y");
         controller.y = true;
     }
 
     public void OnA()
     {
-        Debug.Log("A");
         controller.a = true;
     }
 
     public void OnB()
     {
-        Debug.Log("B");
         controller.b = true;
     }
 
@@ -98,7 +95,6 @@ public class RawPlayerInput : MonoBehaviour
 
     public void OnLtrigger()
     {
-        Debug.Log("Left trigger");
         controller.lTrigger = true;
     }
 

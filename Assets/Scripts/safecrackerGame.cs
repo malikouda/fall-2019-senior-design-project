@@ -7,6 +7,8 @@ public class safecrackerGame : MonoBehaviour, minigame
 
     public int length;
     public Text dial;
+    public GameObject gui;
+
     private List<int> combo;
     private int currentNumber;
     private int correctInputs;
@@ -21,7 +23,7 @@ public class safecrackerGame : MonoBehaviour, minigame
     public void endGame()
     {
         correctInputs = 0;
-        dial.gameObject.SetActive(false);
+        gui.SetActive(true);
     }
 
     public void shownumber()
@@ -72,8 +74,7 @@ public class safecrackerGame : MonoBehaviour, minigame
     public void startGame()
     {
         //Turn on UI
-        dial.gameObject.SetActive(true);
-
+        gui.SetActive(true);
         //generate combo
         combo = new List<int>();
         for (int i = 0; i < length;i++)
