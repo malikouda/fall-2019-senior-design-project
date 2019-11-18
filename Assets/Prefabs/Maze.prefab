@@ -70,7 +70,7 @@ MonoBehaviour:
   - {fileID: 7658687404520688813, guid: 33b1c0106a1b0d741baed57109ce8111, type: 3}
   - {fileID: 5307761965194383546, guid: 76d37c0b040826645bf7a5be371df904, type: 3}
   doorProbability: 0.1
-  artProbability: 0.053
+  artProbability: 0.2
   roomSettings:
   - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}

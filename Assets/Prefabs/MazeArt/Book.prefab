@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomRotation: 0
+  specifyAngles: 0
+  angles: []
 --- !u!1001 &426305196474983631
 PrefabInstance:
   m_ObjectHideFlags: 0

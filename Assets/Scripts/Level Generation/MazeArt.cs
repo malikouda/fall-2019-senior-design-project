@@ -11,7 +11,12 @@ public class MazeArt : MonoBehaviour
         randomArt.transform.position = transform.position;
         randomArt.transform.parent = transform;
         if (randomArt.randomRotation) {
-            randomArt.transform.rotation = Quaternion.Euler(new Vector3(0, Random.RandomRange(0, 360), 0));
+            if (randomArt.specifyAngles) {
+                int idx = Random.RandomRange(0, randomArt.angles.Length);
+                randomArt.transform.rotation = Quaternion.Euler(new Vector3(0, randomArt.angles[idx], 0));
+            } else {
+                randomArt.transform.rotation = Quaternion.Euler(new Vector3(0, Random.RandomRange(0, 360), 0));
+            }
         }
     }
 }
