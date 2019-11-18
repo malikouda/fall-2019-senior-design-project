@@ -93,16 +93,13 @@ public class MenuManager : MonoBehaviour
         inputModule.DisableAllActions();
     }
 
+    //Back to the first screen from character select
     public void toMain()
     {
         joiningPlayers = false;
         manager.DisableJoining();
         inputModule.EnableAllActions();
         inputModule.UpdateModule();
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("playerInput"))
-        {
-            Destroy(player);
-        }
 
         characterSelect.SetActive(false);
         mainMenu.SetActive(true);
