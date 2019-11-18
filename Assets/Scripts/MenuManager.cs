@@ -16,6 +16,8 @@ public class MenuManager : MonoBehaviour
     private List<RawPlayerInput> players;
     private bool joiningPlayers;
     public int levelIndex;
+    public GameObject characterSelect;
+    public GameObject mainMenu;
     
     // Start is called before the first frame update
     void Start()
@@ -96,6 +98,15 @@ public class MenuManager : MonoBehaviour
         joiningPlayers = false;
         manager.DisableJoining();
         inputModule.EnableAllActions();
+        inputModule.UpdateModule();
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("playerInput"))
+        {
+            Destroy(player);
+        }
+
+        characterSelect.SetActive(false);
+        mainMenu.SetActive(true);
+
     }
 
     public void startGame()

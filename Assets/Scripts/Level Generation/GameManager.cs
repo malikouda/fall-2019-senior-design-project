@@ -24,8 +24,6 @@ public class GameManager : MonoBehaviour
     public Animator objanim;
     public Animator winScreen;
     public Animator loseScreen;
-    public InputSystemUIInputModule inputModule;
-    
     private int maxObjectives;
     private int numPlayers;
     private Maze mazeInstance;
@@ -92,11 +90,6 @@ public class GameManager : MonoBehaviour
         --numPlayers;
         if (numPlayers <= 0)
         {
-            foreach(GameObject p in GameObject.FindGameObjectsWithTag("playerInput"))
-            {
-                PlayerInput i = p.GetComponent<PlayerInput>();
-                i.uiInputModule = inputModule;
-            }
             loseScreen.gameObject.SetActive(true);
             loseScreen.SetTrigger("Lose");
         }
@@ -120,7 +113,6 @@ public class GameManager : MonoBehaviour
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("playerInput"))
         {
             PlayerInput i = p.GetComponent<PlayerInput>();
-            i.uiInputModule = inputModule;
         }
         winScreen.gameObject.SetActive(true);
         winScreen.SetTrigger("Win");
@@ -141,8 +133,9 @@ public class GameManager : MonoBehaviour
         foreach(GameObject player in GameObject.FindGameObjectsWithTag("playerInput"))
         {
             Destroy(player);
-            SceneManager.LoadScene(0);
         }
+        SceneManager.LoadScene(0);
+
     }
 
     //When the players alert the guards
