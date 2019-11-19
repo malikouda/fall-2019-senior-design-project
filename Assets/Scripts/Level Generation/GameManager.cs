@@ -106,6 +106,8 @@ public class GameManager : MonoBehaviour
     {
         --numObjectives;
         displayObjectives();
+        if (numObjectives <= 0)
+            FinalObjective.instance.disableLasers();
     }
 
     public void wonGame()
