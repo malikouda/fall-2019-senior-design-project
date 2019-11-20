@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
     public int levelIndex;
     public GameObject characterSelect;
     public GameObject mainMenu;
+    public GameObject loadingScreen;
     
     // Start is called before the first frame update
     void Start()
@@ -108,7 +109,7 @@ public class MenuManager : MonoBehaviour
 
     public void startGame()
     {
-        SceneManager.LoadScene(levelIndex);
+        StartCoroutine(loadScene());
     }
 
     public void test(string message)
@@ -144,5 +145,15 @@ public class MenuManager : MonoBehaviour
         //playerInput.assignMenuControls(inputModule);
 
 
+    }
+
+    private IEnumerator loadScene()
+    {
+        loadingScreen.SetActive(true);
+       AsyncOperation sceneloader = SceneManager.LoadSceneAsync(1);
+       while(!sceneloader.isDone)
+        {
+            yield return null;
+        }
     }
 }
