@@ -379,8 +379,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 145947359}
-  - component: {fileID: 145947358}
-  - component: {fileID: 145947357}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -388,50 +386,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &145947357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145947356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RepeatDelay: 0.5
-  m_RepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: c802b9289ea0bd24583558b41fd54693,
-    type: 3}
-  m_PointAction: {fileID: 0}
-  m_MoveAction: {fileID: 5665436250191240290, guid: c802b9289ea0bd24583558b41fd54693,
-    type: 3}
-  m_SubmitAction: {fileID: -7416816176419216361, guid: c802b9289ea0bd24583558b41fd54693,
-    type: 3}
-  m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 0}
-  m_MiddleClickAction: {fileID: 0}
-  m_RightClickAction: {fileID: 0}
-  m_ScrollWheelAction: {fileID: 0}
-  m_TrackedDevicePositionAction: {fileID: 0}
-  m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_TrackedDeviceSelectAction: {fileID: 0}
---- !u!114 &145947358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145947356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 573634627}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
 --- !u!4 &145947359
 Transform:
   m_ObjectHideFlags: 0
@@ -668,7 +622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1298,7 +1252,7 @@ MonoBehaviour:
   numObjectives: 4
   objText: {fileID: 688242714}
   objanim: {fileID: 53921894}
-  winScreen: {fileID: 1245552062}
+  winScreen: {fileID: 0}
   loseScreen: {fileID: 2141506683}
 --- !u!4 &934843956
 Transform:
