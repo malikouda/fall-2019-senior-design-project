@@ -6,15 +6,20 @@ public class mastermindGame : MonoBehaviour, minigame
 {
     public int length;
     public GameObject buttons;
+    public AudioClip[] phoneClips;
+    public AudioClip[] playerClips;
+    public AudioClip wrongClip;
 
     private int correctInput;
     private List<int> pattern;
     private Animator anim;
     private bool canInput;
     private const float animationLength = 1f;
+    private AudioSource sound;
 
     private void Start()
     {
+        sound = GetComponent<AudioSource>();
         canInput = false;
         anim = GetComponent<Animator>();
     }
@@ -37,7 +42,7 @@ public class mastermindGame : MonoBehaviour, minigame
             return;
         if (input == pattern[correctInput])
         {
-
+            playSound(playerClips[input]);
             correctInput++;
             if (correctInput >= length)
             {
@@ -49,9 +54,10 @@ public class mastermindGame : MonoBehaviour, minigame
         }
         else
         {
+
             correctInput = 0;
             anim.SetTrigger("fail");
-            StartCoroutine(displayPattern());
+            StartCoroutine(displayPattern(true));
         }
     }
 
@@ -64,30 +70,48 @@ public class mastermindGame : MonoBehaviour, minigame
         {
             pattern.Add(Random.Range(0, 4));
         }
-        StartCoroutine(displayPattern());
+        StartCoroutine(displayPattern(false));
     }
 
-    public IEnumerator displayPattern ()
+    public void playSound(AudioClip a)
     {
+        sound.clip = a;
+        sound.Play();
+    }
+
+    public IEnumerator displayPattern (bool incorrect)
+    {
+
+        WaitForSeconds wait = new WaitForSeconds(animationLength);
         canInput = false;
-        foreach(int current in pattern)
+        if (incorrect)
+        {
+            playSound(wrongClip);
+            yield return wait; 
+        }
+
+        foreach (int current in pattern)
         {
             switch(current)
             {
                 case (int)BUTTONS.A:
                     anim.SetTrigger("A");
+                    playSound(phoneClips[2]);
                     break;
                 case (int)BUTTONS.B:
                     anim.SetTrigger("B");
+                    playSound(phoneClips[3]);
                     break;
                 case (int)BUTTONS.X:
                     anim.SetTrigger("X");
+                    playSound(phoneClips[0]);
                     break;
                 case (int)BUTTONS.Y:
                     anim.SetTrigger("Y");
+                    playSound(phoneClips[1]);
                     break;
             }
-            yield return new WaitForSeconds(animationLength);
+            yield return wait;
 
 
         }

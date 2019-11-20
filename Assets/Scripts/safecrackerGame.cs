@@ -8,11 +8,19 @@ public class safecrackerGame : MonoBehaviour, minigame
     public int length;
     public Text dial;
     public GameObject gui;
+    public AudioClip changeSound;
+    public AudioClip successSound;
 
     private List<int> combo;
     private int currentNumber;
     private int correctInputs;
+    private AudioSource sound;
 
+
+    private void Start()
+    {
+        sound = GetComponent<AudioSource>();
+    }
     public void complete()
     {
         GameManager.instance.completedMinigame();
@@ -47,22 +55,32 @@ public class safecrackerGame : MonoBehaviour, minigame
     {  
         switch (input)
         {
+            //Go down a number
             case (int)BUTTONS.LTRIGGER:
+                sound.clip = changeSound;
+                sound.Play();
                 --currentNumber;
                 //reset back to 9
                 if (currentNumber < 0)
                     currentNumber = 9;
                 break;
+            //Go up a number
             case (int)BUTTONS.RTRIGGER:
+                sound.clip = changeSound;
+                sound.Play();
                 currentNumber = (currentNumber + 1) % 10;
                 break;
+            //submit
             case (int)BUTTONS.A:
                 if (currentNumber == combo[correctInputs])
                 {
+                    sound.clip = successSound;
+                    sound.Play();
                     ++correctInputs;
                     if (correctInputs >= length)
                     {
                         complete();
+                        
                     }
                 }
                 break;

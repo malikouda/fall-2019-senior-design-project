@@ -6,18 +6,25 @@ using UnityEngine.UI;
 public class hackerGame : MonoBehaviour, minigame
 {
 
-    public int length;
+    public int Maxlength;
+    public int Minlength;
     public guiButtons guiButtons;
+    public AudioClip incorrect;
+    public AudioClip[] correctNoises;
+
+    private int length;
     private List<int> pattern;
     private int correctInput;
     private Text playText;
     private Animator anim;
-
+    private AudioSource sound;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        length = Random.Range(Minlength, length + 1);
+        sound = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         playText = GetComponentInChildren<Text>();
     }
@@ -69,23 +76,35 @@ public class hackerGame : MonoBehaviour, minigame
         guiButtons.reset();
         if (input == pattern[correctInput])
         {
-            
+            playRandomCorrectSound();
             correctInput++;
             if (correctInput > length)
             {
                 complete();
 
             }
+            else
+            {
+                displayNext(pattern[correctInput]);
+                anim.SetTrigger("pass");
+            }
 
-            displayNext(pattern[correctInput]);
-            anim.SetTrigger("pass");
+
         }
         else
         {
             correctInput = 0;
             displayNext(pattern[correctInput]);
             anim.SetTrigger("fail");
+            sound.clip = incorrect;
+            sound.Play();
         }
+    }
+
+    public void playRandomCorrectSound()
+    {
+        sound.clip = correctNoises[Random.Range(0, correctNoises.Length)];
+        sound.Play();
     }
 
     public void complete()
