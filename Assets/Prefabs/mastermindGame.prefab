@@ -657,6 +657,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a2048e7c68e898c40a141df7f60fc839, type: 3}
   - {fileID: 8300000, guid: 51174d5ce0210664cb494d308035628f, type: 3}
   wrongClip: {fileID: 8300000, guid: 75879a8b638772444932a154bed5b8dd, type: 3}
+  model: {fileID: 7784706834873862035}
 --- !u!82 &2235169588560754607
 AudioSource:
   m_ObjectHideFlags: 0

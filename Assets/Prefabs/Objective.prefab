@@ -728,6 +728,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8d5d5f246db81fa4091141b306c842f5, type: 3}
   - {fileID: 8300000, guid: f0e82eeaf4d72a54bb973746a785f6ac, type: 3}
   - {fileID: 8300000, guid: f7cfb6c0165b2b9498cdb10413c930c1, type: 3}
+  model: {fileID: 2344263239530451782}
 --- !u!95 &8966107077878855510
 Animator:
   serializedVersion: 3
@@ -1341,6 +1342,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c88c923115c45eea4e055cc672e0ec, type: 3}
+--- !u!1 &2344263239530451782 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 16c88c923115c45eea4e055cc672e0ec,
+    type: 3}
+  m_PrefabInstance: {fileID: 6028512203441130063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1644701333547049301 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 16c88c923115c45eea4e055cc672e0ec,

@@ -9,6 +9,7 @@ public class mastermindGame : MonoBehaviour, minigame
     public AudioClip[] phoneClips;
     public AudioClip[] playerClips;
     public AudioClip wrongClip;
+    public GameObject model;
 
     private int correctInput;
     private List<int> pattern;
@@ -26,7 +27,16 @@ public class mastermindGame : MonoBehaviour, minigame
 
     public void complete()
     {
+        buttons.SetActive(false);
+        model.SetActive(false);
         GameManager.instance.completedMinigame();
+        GameObject particles = Instantiate(Resources.Load("MinigameParticles"), gameObject.transform.position, Quaternion.identity, transform) as GameObject;
+        particles.transform.localScale = transform.lossyScale;
+        Invoke("destroyObject", 2);
+    }
+
+    public void destroyObject()
+    {
         Destroy(gameObject);
     }
 

@@ -10,6 +10,7 @@ public class safecrackerGame : MonoBehaviour, minigame
     public GameObject gui;
     public AudioClip changeSound;
     public AudioClip successSound;
+    public GameObject model;
 
     private List<int> combo;
     private int currentNumber;
@@ -23,15 +24,23 @@ public class safecrackerGame : MonoBehaviour, minigame
     }
     public void complete()
     {
+        model.SetActive(false);
+        gui.SetActive(false);
         GameManager.instance.completedMinigame();
-        Destroy(gameObject);
+        GameObject particles = Instantiate(Resources.Load("MinigameParticles"),gameObject.transform.position,Quaternion.identity,transform) as GameObject;
+        particles.transform.localScale = transform.lossyScale;
+        Invoke("destroyObject", 2);
+    }
 
+    public void destroyObject()
+    {
+        Destroy(gameObject);
     }
 
     public void endGame()
     {
         correctInputs = 0;
-        gui.SetActive(true);
+        gui.SetActive(false);
     }
 
     public void shownumber()

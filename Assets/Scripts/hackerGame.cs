@@ -11,6 +11,7 @@ public class hackerGame : MonoBehaviour, minigame
     public guiButtons guiButtons;
     public AudioClip incorrect;
     public AudioClip[] correctNoises;
+    public GameObject model;
 
     private int length;
     private List<int> pattern;
@@ -109,10 +110,19 @@ public class hackerGame : MonoBehaviour, minigame
 
     public void complete()
     {
+        model.SetActive(false);
+        guiButtons.deactivate();
         correctInput = 0;
         GameManager.instance.completedMinigame();
-        Destroy(gameObject);
+        GameObject particles = Instantiate(Resources.Load("MinigameParticles"), gameObject.transform.position, Quaternion.identity, transform) as GameObject;
+        particles.transform.localScale = transform.lossyScale;
+        Invoke("destroyObject", 2);
 
+    }
+
+    public void destroyObject()
+    {
+        Destroy(gameObject);
     }
 
     public void endGame()

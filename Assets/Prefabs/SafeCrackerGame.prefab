@@ -1067,6 +1067,7 @@ MonoBehaviour:
   gui: {fileID: 3349153449371548411}
   changeSound: {fileID: 8300000, guid: 23673d967ea87e442ac5cb1b043376c0, type: 3}
   successSound: {fileID: 8300000, guid: b1a4a39ae2238be4fa56363915760127, type: 3}
+  model: {fileID: 2211554272445491905}
 --- !u!65 &5967209752923558126
 BoxCollider:
   m_ObjectHideFlags: 0
