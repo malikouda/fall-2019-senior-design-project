@@ -24,11 +24,11 @@ public class RawPlayerInput : MonoBehaviour
 
     //The unique color related to this player
     public PLAYERID playerId;
-
     public controllerInput controller;
     private PlayerControls controls;
     private PlayerInput inputComp;
-    Vector2 move;
+    
+    
     public void Awake()
     {
         controller = new controllerInput();
