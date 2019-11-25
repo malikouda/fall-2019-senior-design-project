@@ -4,7 +4,8 @@ public enum MazeDirection {
     North,
     East,
     South,
-    West
+    West,
+    Null
 }
 
 public static class MazeDirections {

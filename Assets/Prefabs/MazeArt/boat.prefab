@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5975381324346316406}
   - component: {fileID: -544269662368700259}
   m_Layer: 0
-  m_Name: Boat
+  m_Name: boat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomRotation: 1
+  specifyAngles: 0
+  angles: []
 --- !u!1001 &6208189278150847190
 PrefabInstance:
   m_ObjectHideFlags: 0

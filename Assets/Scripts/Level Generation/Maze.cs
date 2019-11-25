@@ -24,6 +24,7 @@ public class Maze : MonoBehaviour {
     public float doorProbability;
     [Range(0f, 0.2f)]
     public float artProbability;
+    
 
     public MazeRoomSettings[] roomSettings;
 
@@ -31,6 +32,14 @@ public class Maze : MonoBehaviour {
     [HideInInspector]
     public GameManager gameManager;
 
+    //percentage more likely art is to spawn against a wall
+    private const float wallIncentive = .3f;
+
+    //percentage less likely art is to spawn in open cells
+    private const float middleDetterant = .5f;
+
+    //precentage more likely art is to spawn in corners or dead ends
+    private const float cornerOrDeadEndIncentive = 1.0f;
 
     public void Awake()
     {
@@ -66,12 +75,18 @@ public class Maze : MonoBehaviour {
                     ceilingCell.name = "Ceiling Cell " + cell.coordinates.x + ", " + cell.coordinates.z;
                     ceilingCell.transform.localPosition = new Vector3(cell.coordinates.x - size.x * 0.5f + 0.5f, 1.1f, cell.coordinates.z - size.z * 0.5f + 0.5f);
                     ceilingCell.transform.parent = ceiling.transform;
+
+                   /*
                     if (Random.value < artProbability && !CellNextToDoor(cell) && !cell.occupied && !CellNextToObject(cell)) {
                         cell.occupied = true;
                         MazeArt prefab = Instantiate(artPrefab) as MazeArt;
                         prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
                         prefab.transform.parent = cell.transform.parent;
                     }
+                    */
+                    
+                    //generateArt(mazeRoom, i);
+                    
                 }
 
                 MeshFilter[] meshFilters = rooms[i].ceiling.GetComponentsInChildren<MeshFilter>();
@@ -91,17 +106,8 @@ public class Maze : MonoBehaviour {
                 rooms[i].ceiling.transform.GetComponent<MeshFilter>().mesh = new Mesh();
                 rooms[i].ceiling.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
                 rooms[i].ceiling.transform.gameObject.SetActive(true);
-            } else {
-                foreach (MazeCell cell in rooms[i].cells) {
-                    cell.transform.parent = mazeRoom.transform;
-                    if (Random.value < artProbability && !CellNextToDoor(cell) && !cell.occupied && !CellNextToObject(cell)) {
-                        cell.occupied = true;
-                        MazeArt prefab = Instantiate(artPrefab) as MazeArt;
-                        prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
-                        prefab.transform.parent = cell.transform.parent;
-                    }
-                }
             }
+            generateArt(mazeRoom, i);
 
             if (rooms[i].size > 1) {
                 if (RoomHasValidPlacement(rooms[i])) {
@@ -119,6 +125,54 @@ public class Maze : MonoBehaviour {
         numObjectives = gameManager.numObjectives;
         for (int i = 0; i < numObjectives; i++) {
             spawnObjective(objectivePrefabs[Random.Range(0,objectivePrefabs.Length)], objRooms);
+        }
+    }
+
+    private void generateArt(GameObject mazeRoom, int i)
+    {
+        foreach (MazeCell cell in rooms[i].cells)
+        {
+            float randomValueWeighted = Random.value;
+            MazeDirection wallDirection = MazeDirection.Null;
+            //weight for walls next to wall and against those in the middle
+            randomValueWeighted -= CellNextToWall(cell, out wallDirection) ? wallIncentive : -middleDetterant;
+            //weight for corners and dead ends
+            if (CellinDeadEndOrCorner(cell))
+                randomValueWeighted -= cornerOrDeadEndIncentive;
+
+            if (randomValueWeighted < artProbability && !CellNextToDoor(cell) && !cell.occupied && !CellNextToObject(cell) && (!CellTooNarrow(cell) || CellinDeadEndOrCorner(cell)))
+            {
+                cell.occupied = true;
+                MazeArt prefab = Instantiate(artPrefab) as MazeArt;
+                prefab.transform.position = new Vector3(cell.transform.position.x, 0.258f, cell.transform.position.z);
+                prefab.transform.parent = cell.transform.parent;
+                if (wallDirection != MazeDirection.Null)
+                {
+                    switch (wallDirection)
+                    {
+                        case MazeDirection.North:
+                            {
+                                //prefab.transform.Translate(new Vector3(0, 0, .1f));
+                                break;
+                            }
+                        case MazeDirection.South:
+                            {
+                                prefab.transform.Rotate(new Vector3(prefab.transform.rotation.x, 90, prefab.transform.rotation.z));
+                                break;
+                            }
+                        case MazeDirection.East:
+                            {
+                                prefab.transform.Rotate(new Vector3(prefab.transform.rotation.x, 180, prefab.transform.rotation.z));
+                                break;
+                            }
+                        case MazeDirection.West:
+                            {
+                                prefab.transform.Rotate(new Vector3(prefab.transform.rotation.x, 90, prefab.transform.rotation.z));
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
 
@@ -158,6 +212,57 @@ public class Maze : MonoBehaviour {
         }
         return nextToDoor;
     }
+
+    private bool CellNextToWall(MazeCell cell, out MazeDirection wall)
+    {
+        MazeDirection[] directions = new MazeDirection[4] { MazeDirection.North, MazeDirection.East, MazeDirection.South, MazeDirection.West };
+        for (int i = 0; i < 4; i++)
+        {
+            if (cell.GetEdge(directions[i]) is MazeWall)
+            {
+                wall = directions[i];
+                return true;
+            }
+        }
+        
+        wall = MazeDirection.Null;
+        return false;
+    }
+
+    //Checks if the cell is in a dead end or a corner
+    private bool CellinDeadEndOrCorner(MazeCell cell)
+    {
+        //check the numbe of walls surrounding the cell
+        int numWalls = 0;
+        MazeDirection[] directions = new MazeDirection[4] { MazeDirection.North, MazeDirection.East, MazeDirection.South, MazeDirection.West };
+        for (int i = 0; i < 4; i++)
+        {
+            if (cell.GetEdge(directions[i]) is MazeWall)
+            {
+                ++numWalls;
+            }
+        }
+
+        //If the cell has 3 walls, it's a dead end
+        if (numWalls == 3)
+            return true;
+        
+        //If the cell has 2 walls, but they aren't opposite each other, it's in a corner
+        if (numWalls == 2 && !CellTooNarrow(cell))
+            return true;
+        else
+            return false;
+
+    }
+
+    //checks if the cell is in a 1x1 corridor
+    private bool CellTooNarrow(MazeCell cell)
+    {
+        bool NS = cell.GetEdge(MazeDirection.North) is MazeWall && cell.GetEdge(MazeDirection.South) is MazeWall;
+        bool EW = cell.GetEdge(MazeDirection.East) is MazeWall && cell.GetEdge(MazeDirection.West) is MazeWall;
+        return NS || EW;
+    }
+
 
     private bool CellNextToObject(MazeCell cell) {
         bool nextToObject = false;
