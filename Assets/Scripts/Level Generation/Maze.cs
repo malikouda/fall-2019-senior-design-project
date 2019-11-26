@@ -107,7 +107,6 @@ public class Maze : MonoBehaviour {
                 rooms[i].ceiling.transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
                 rooms[i].ceiling.transform.gameObject.SetActive(true);
             }
-            generateArt(mazeRoom, i);
 
             if (rooms[i].size > 1) {
                 if (RoomHasValidPlacement(rooms[i])) {
@@ -117,6 +116,9 @@ public class Maze : MonoBehaviour {
                     }
                 }
             }
+
+
+
         }
 
 
@@ -126,9 +128,15 @@ public class Maze : MonoBehaviour {
         for (int i = 0; i < numObjectives; i++) {
             spawnObjective(objectivePrefabs[Random.Range(0,objectivePrefabs.Length)], objRooms);
         }
+
+        for (int i = 0; i <rooms.Count;++i)
+        {
+            generateArt(i);
+        }
+
     }
 
-    private void generateArt(GameObject mazeRoom, int i)
+    private void generateArt(int i)
     {
         foreach (MazeCell cell in rooms[i].cells)
         {

@@ -131,7 +131,20 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.75
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8756004237039004874, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 3524145531773473557, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 5399438263107762517, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 6612082365108056033, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 2527790724481952957, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 6077279947020174062, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 3027297201639256856, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 1983459001918273293, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 8483842422459954961, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 588080280767390844, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 5247477547682768866, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 6269130576291071542, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
+    - {fileID: 8790383844122008356, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 4f29c0339d86a44d8be08c0ad13527e6, type: 3}
 --- !u!4 &6633257180843261211 stripped
 Transform:
