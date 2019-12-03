@@ -1977,7 +1977,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: E x i t
+  m_Text: E X I T
 --- !u!222 &1068362898
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3290,7 +3290,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: S t a r t
+  m_Text: S T A R T
 --- !u!222 &1765922596
 CanvasRenderer:
   m_ObjectHideFlags: 0
