@@ -19,7 +19,7 @@ public class MenuManager : MonoBehaviour
     public GameObject characterSelect;
     public GameObject mainMenu;
     public GameObject loadingScreen;
-    
+    public AudioFade fader;
     // Start is called before the first frame update
     void Start()
     {
@@ -109,6 +109,7 @@ public class MenuManager : MonoBehaviour
 
     public void startGame()
     {
+        fader.fadeSounds();
         StartCoroutine(loadScene());
     }
 
