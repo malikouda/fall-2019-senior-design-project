@@ -72,13 +72,13 @@ MonoBehaviour:
   doorProbability: 0.1
   artProbability: 0.2
   roomSettings:
-  - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
+  - floorMaterial: {fileID: 2100000, guid: e7190f1c730cc1e4da80d1db9c3d38a4, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}
-  - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
+  - floorMaterial: {fileID: 2100000, guid: e7190f1c730cc1e4da80d1db9c3d38a4, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}
-  - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
+  - floorMaterial: {fileID: 2100000, guid: e7190f1c730cc1e4da80d1db9c3d38a4, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}
-  - floorMaterial: {fileID: 2100000, guid: 51961be3b97e94dbcb171b41874d53da, type: 2}
+  - floorMaterial: {fileID: 2100000, guid: e7190f1c730cc1e4da80d1db9c3d38a4, type: 2}
     wallMaterial: {fileID: 2100000, guid: d8bea2b4e3eb38c429ffda577da1dd0b, type: 2}
   rooms: []
   gameManager: {fileID: 0}
